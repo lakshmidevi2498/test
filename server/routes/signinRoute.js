@@ -2,7 +2,7 @@ import express from 'express';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import userSchemaModal from '../models/userSchemaModal.js';
-import './passport.js';
+import '../passport.js';
 
 const router = express.Router();
 const CLIENT_URI = "http://localhost:3000/";
