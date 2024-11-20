@@ -36,7 +36,7 @@ const PORT = process.env.PORT || 5050;
 
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'https://test-1-ekpw.onrender.com/',
   methods: ['GET', 'POST', 'DELETE', 'PUT' ],
   credentials: true,
 }));
