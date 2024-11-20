@@ -22,5 +22,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-server/.env
-server/.passport.js
+# Backend specific files
+/server/.env
+/server/.passport.js 
