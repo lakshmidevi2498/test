@@ -1,8 +1,9 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Strategy as FacebookStrategy } from "passport-facebook";
-import userSchema from "./models/userSchemaModal";
+// import userSchema from "./models/userSchemaModal";
 import dotenv from 'dotenv';
+import userSchemaModal from "./models/userSchemaModal";
 dotenv.config();
 
  
@@ -23,9 +24,9 @@ passport.use(
           throw new Error('Profile ID not found');
         }
 
-        const user = await userSchema.findOne({ googleId: profile.id });
+        const user = await userSchemaModal.findOne({ googleId: profile.id });
         if (!user) {
-          const newUser = await userSchema.create({
+          const newUser = await userSchemaModal.create({
             googleId: profile.id,
             name: profile.displayName || 'No Name',
             email: profile.emails[0].value,
@@ -58,10 +59,10 @@ passport.use(
         console.log("refreshToken Token:", refreshToken);  
         console.log("Access Token:", accessToken);  
          
-        let user = await userSchema.findOne({ facebookId: profile.id });
+        let user = await userSchemaModal.findOne({ facebookId: profile.id });
 
         if (!user) {
-          user = new userSchema({
+          user = new userSchemaModal({
             facebookId: profile.id,   
             name: profile.displayName,
             profilePicture: profile.photos && profile.photos[0] ? profile.photos[0].value : null,  
@@ -86,7 +87,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await userSchema.findById(id); // Assuming you meant userSchema instead of GoogleUser
+    const user = await userSchemaModal.findById(id); // Assuming you meant userSchema instead of GoogleUser
     done(null, user);
   } catch (err) {
     done(err, null);
