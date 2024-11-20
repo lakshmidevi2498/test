@@ -1,0 +1,5 @@
+{
+    "ext": "js,json,mjs,jsx",
+    "exec": "node -r @babel/register server.js"
+  }
+  
