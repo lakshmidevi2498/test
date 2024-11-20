@@ -23,7 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 passport.js
-/.env
+
 *.env
 
 *.env.*
