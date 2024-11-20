@@ -22,13 +22,13 @@ import razorpayRoute from './routes/razorpayRoute.js';
 import orderHistoryRoute from './routes/orderHistoryRoute.js';
 import webpush from 'web-push';
 import notificationRoute from './routes/notificationRoute.js'
-import {ComponentLoader} from 'adminjs'
+// import {ComponentLoader} from 'adminjs'
 
-const componentLoader = new ComponentLoader()
+// const componentLoader = new ComponentLoader()
 
-const Components = {
-  CustomDashboard: componentLoader.add('LogoutButton', './components/LogoutButton'),
-}
+// const Components = {
+//   CustomDashboard: componentLoader.add('LogoutButton', './components/LogoutButton'),
+// }
 
 dotenv.config();
 const app = express();
@@ -85,16 +85,7 @@ AdminJS.registerAdapter({
 const adminJs = new AdminJS({
   databases: [mongoose],
   rootPath: '/adminpanel',
-  options:{
-    properties:{
-      type:'button',
-      components:{
-        component:Components.Components,
-      }
-    },
-  },
- 
-  componentLoader
+
 });
 
 
