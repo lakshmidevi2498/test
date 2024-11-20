@@ -3,7 +3,7 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Strategy as FacebookStrategy } from "passport-facebook";
 // import userSchema from "./models/userSchemaModal";
 import dotenv from 'dotenv';
-import userSchemaModal from "./models/userSchemaModal";
+import userSchemaModal from "./models/userSchemaModal.js";
 dotenv.config();
 
  
