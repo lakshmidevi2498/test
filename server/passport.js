@@ -14,7 +14,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:5050/auth/google/callback", 
+      callbackURL: "https://test-3ahx.onrender.com/auth/google/callback", 
       passReqToCallback: true
     },
     async (req, accessToken, refreshToken, profile, done) => {
@@ -51,7 +51,7 @@ passport.use(
     {
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET,
-      callbackURL: "http://localhost:5050/auth/facebook/callback",
+      callbackURL: "https://test-3ahx.onrender.com/auth/facebook/callback",
       // profileFields: ['id', 'displayName', 'photos', 'email'], // Ensure email is included
     },
     async (accessToken, refreshToken, profile, done) => {
