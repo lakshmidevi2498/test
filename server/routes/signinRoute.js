@@ -42,7 +42,7 @@ console.log(",user",user)
 
             console.log("query", query);
 
-            res.redirect(`http://localhost:3000/?${query}`);
+            res.redirect(`https://test-1-ekpw.onrender.com/?${query}`);
         } catch (error) {
             console.error('Error during Google callback:', error);
             res.status(500).send({ message: 'Server Error' });
