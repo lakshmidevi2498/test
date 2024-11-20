@@ -23,7 +23,7 @@
       "web-push": "^3.6.7"
     },
     "scripts": {
-      "start": "node server.js",
+      "start": "nodemon server.js",
       "dev": "nodemon -r @babel/register server.js"
     },
     "name": "server",
