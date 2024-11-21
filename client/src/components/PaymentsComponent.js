@@ -421,7 +421,7 @@ const body = {
                                         </Controls.Grid>
                                     </Controls.Card>
                                 </Controls.Grid>
-                                <Controls.Grid item sx={{ justifyContent: "end", display: "flex" }} mt={3}>
+                                <Controls.Grid item sx={{ justifyContent: "end", display: "flex" }} my={3}>
                                     {value && (address || useraddress) ? <Controls.Button variant='secondary' onClick={handleRazorpay}>checkout</Controls.Button> :
                                         <Controls.Button variant='secondary' onClick={handlealert}>checkout</Controls.Button>}
 

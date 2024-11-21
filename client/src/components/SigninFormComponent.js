@@ -92,7 +92,7 @@ console.log("loginUSerData",loginUserData)
       <Controls.Grid
         container
         sx={{
-          height: "650px",
+          height: {xs:"650px",xl:"100vh"},
           position: "relative",
           overflow: "hidden",
         }}
@@ -103,7 +103,7 @@ console.log("loginUSerData",loginUserData)
           src="./assests/images/form.jpg"
           sx={{
             width: "100vw",
-            height: "650px",
+            height: {xs:"650px",xl:"100vh"},
             position: "absolute",
             top: 0,
             left: 0,
@@ -111,21 +111,6 @@ console.log("loginUSerData",loginUserData)
             zIndex: 1,
           }}
         />
-       <Controls.Box 
-  sx={{
-    backgroundColor: "white",
-    opacity: 0.4,
-    zIndex: 2,
-    width: "650px",
-    height: "550px",
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)", 
-    objectFit: "cover", 
-    borderRadius:"20px"
-  }}
-/>
 
 
         <Controls.Grid
@@ -141,10 +126,10 @@ console.log("loginUSerData",loginUserData)
           <Controls.Grid
             item
             xs={11}
-            sm={6}
-            md={4}
-            sx={{  
-              padding: 0,  
+            sm={8}
+            md={6}
+            xl={4}
+            sx={{   backgroundColor:'rgba(255, 255, 255, 0.3)',padding:{xs:2,sm:4,xl:6},borderRadius:"20px"  
             }}
           >
             <Formik

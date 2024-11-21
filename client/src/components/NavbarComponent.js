@@ -9,7 +9,7 @@ import theme from '../utilities/theme';
 
 const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
   const [activeLink, setActiveLink] = useState('Home');
-  const [name, SetName] = useState('')
+  const [name, setName] = useState('')
   const [wishlistCount, setWishlistCount] = useState(0)
   const [cartCount, setCartCount] = useState(0)
   const [checkoutCount, setCheckoutCount] = useState(0)
@@ -21,14 +21,26 @@ const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
     setToken(token)
   },[])
 
-  useEffect(() => {     
-        
-        const username = localStorage.getItem('signinUserName') || localStorage.getItem('signupUserName') || localStorage.getItem('username') 
-    SetName(username)
-    console.log("username in navbar",username)
-    
+  useEffect(() => {
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+      setName(storedUsername);
+    }
+    console.log("name in navbar",name ,"fsdf",storedUsername)
+  }, []);   
 
-  }, [])
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const username = localStorage.getItem('username') || 
+                       localStorage.getItem('signinUserName') || 
+                       localStorage.getItem('signupUserName');
+      setName(username);  
+    }, 1000);  
+
+    return () => clearInterval(interval);  
+  }, []); 
+
   const loadWishlist = useSelector((state) => state.loadwishlist.data || {});
   const loadCartData = useSelector((state) => state.loadcartproducts.data || {});
   const loadCheckout = useSelector((state)=>state.loadcheckout.data || [] )
@@ -89,7 +101,7 @@ const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
     } else {
       console.warn("checkoutItems is not an array:", checkoutItems);
     }
-  }, [loadCheckout]);
+  }, [loadCheckout,checkoutItems]);
 
   const getAvatarColor = (name) => { 
     const firstChar = name.charAt(0).toUpperCase();

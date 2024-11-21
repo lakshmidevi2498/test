@@ -22,6 +22,7 @@ import razorpayRoute from './routes/razorpayRoute.js';
 import orderHistoryRoute from './routes/orderHistoryRoute.js';
 import webpush from 'web-push';
 import notificationRoute from './routes/notificationRoute.js'
+import path from 'path';
 // import {ComponentLoader} from 'adminjs'
 
 // const componentLoader = new ComponentLoader()
@@ -46,6 +47,9 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
 }));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const apiKeys = {
   publicKey: 'BCoZetIZDVC9nbAkQmdXdLwXwXyEIYeuq1xpJ4Cnqc-TJdf3w9bkbD0JGu4v1kx7uuqBMHnKQPlkIaWPu5Er2uI',
@@ -118,6 +122,15 @@ app.get('/logout', (req, res) => {
     res.clearCookie('connect.sid');
     res.status(200).send({ message: 'Logged out successfully' });
   });
+});
+
+
+const __dirname = path.resolve(); // If using ES modules
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+// Catch-all handler for all other routes (must be after API routes)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
  

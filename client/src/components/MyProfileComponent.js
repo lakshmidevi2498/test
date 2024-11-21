@@ -135,7 +135,7 @@ const MyProfileComponent = () => {
                                         My Profile
                                     </Controls.Typography>
                                     <Controls.Grid item>
-                                        <Controls.Typography variant='h3' sx={{ fontSize: { xs: "20px" } }}>  {userData ? userData.email : userDataOne ? userDataOne.email : ""}</Controls.Typography>
+                                        <Controls.Typography variant='h3' sx={{ fontSize:{xs:"14px",sm:"18px"},fontWeight:"bold" }}>  {userData ? userData.email : userDataOne ? userDataOne.email : ""}</Controls.Typography>
                                     </Controls.Grid>
                                 </Controls.Grid>
 
@@ -186,7 +186,7 @@ const MyProfileComponent = () => {
                                 alignItems: "center",
                                 textAlign: "center", 
                                 order:{xs:1,sm:2},
-                                marginY:{xs:10,sm:0},
+                                marginY:{xs:10,sm:'auto'},
                             }}
                         >
                             <Controls.Grid
@@ -202,8 +202,8 @@ const MyProfileComponent = () => {
                               {(userDataOne ? userDataOne.name.charAt(0) :"").toUpperCase()}
 </Controls.Avatar>
                             </Controls.Grid>
-                            <Controls.Grid item>
-                                <Controls.Typography variant="h4">
+                            <Controls.Grid item mt={1}>
+                                <Controls.Typography variant="h4" sx={{fontSize:{xs:"14px",sm:"18px"},fontWeight:"bold"}}> 
                                     {userDataOne ? (userDataOne.name || userDataOne.username) : "No User"}
                                 </Controls.Typography>
                             </Controls.Grid>
