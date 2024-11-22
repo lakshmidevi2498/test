@@ -49,7 +49,7 @@ useEffect(() => {
   const user = res?.userExist
   console.log("isAdmin",user?.role)
   if (user?.role === "admin") {
-        window.location.href = "http://localhost:5050/adminpanel";
+        window.location.href = "https://test-3ahx.onrender.com/adminpanel";
       }  
       else {
       console.log("User data is not yet available");
