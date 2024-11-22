@@ -4,8 +4,7 @@ import jwt from 'jsonwebtoken';
 import userSchemaModal from '../models/userSchemaModal.js';
 import '../passport.js';
 
-const router = express.Router();
-const CLIENT_URI = "http://localhost:3000/";
+const router = express.Router(); 
 
 router.get('/google', passport.authenticate('google', {
     scope: ['profile', 'email'],

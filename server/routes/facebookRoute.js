@@ -3,8 +3,7 @@ import passport from 'passport';
 import jwt from 'jsonwebtoken'; 
 import '../passport.js';   
 
-const router = express.Router();
-const CLIENT_URI = "http://localhost:3000/";
+const router = express.Router(); 
 
 router.get('/facebook', (req, res, next) => {
   console.log('Facebook Auth route hit');
