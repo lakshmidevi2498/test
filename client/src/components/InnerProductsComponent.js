@@ -3,6 +3,12 @@ import Controls from '../commons/Controls'
 import NavbarComponent from './NavbarComponent'
 import { useLocation, useNavigate } from 'react-router-dom'
 import theme from '../utilities/theme'
+import { getToken, getUserId } from './GlobalFunctionsComponent'
+import { postCartInitiate } from '../redux/action/postCartAction'
+import { loadCartInitiate } from '../redux/action/loadCartAction'
+import { deleteCartInitiate } from '../redux/action/deleteCartAction'
+import { postCheckoutInitiate } from '../redux/action/postCheckoutAction'
+import { useSelector ,useDispatch } from 'react-redux'
 
 
 const InnerProductsComponent = () => {
@@ -12,6 +18,9 @@ const InnerProductsComponent = () => {
  
     const location = useLocation()
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const loadCartData = useSelector((state) => state.loadcartproducts.data || []);
 
 
     useEffect(() => {
@@ -29,6 +38,57 @@ const InnerProductsComponent = () => {
     const handleNavigate = () => {
         navigate('/categories/vegetable')
     }
+
+
+    const handleAddToCart = async (productId) => {
+        let userId = getUserId();
+        let token = getToken()
+ 
+        if(userId && token){
+        await dispatch(postCartInitiate(token,userId, productId));
+        await dispatch(loadCartInitiate(token,userId));
+        }
+    };
+
+    const handleRemoveFromCart = async (productId) => {
+        let userId = getUserId();
+        let token = getToken()
+ 
+        if(userId && token ){
+        await dispatch(deleteCartInitiate(token,userId,productId))
+        await dispatch(loadCartInitiate(token,userId));
+        }
+
+    };
+
+    const isProductInCart = (productId) => {
+
+        let userId = getUserId()
+        let token = getToken()
+         if(userId && token){
+        const cartProducts = loadCartData.data?.cartProducts?.productId || [];
+
+        console.log("cartProducts", cartProducts)
+        return Array.isArray(cartProducts) && cartProducts.some((item) => item._id === productId);
+         }
+    };
+
+    const handleBuynow = async (productId) => {
+
+try {
+    let userId = getUserId()
+    let token = getToken()
+    if(userId && token){
+    await dispatch(postCheckoutInitiate(token ,userId, productId))
+    navigate('/checkout')
+    }
+    
+} catch (error) {
+    console.log("error",error)
+}       
+       
+    }
+
     return (
         <>
             
@@ -75,15 +135,34 @@ const InnerProductsComponent = () => {
                                     product.type === "dairy" ? "liter" : "piece"}</Controls.Typography>
                             </Controls.Grid>
                             <Controls.Grid container justifyContent="space-between" alignItems="center" mt={2}>
-                                <Controls.Grid item xs={12} sm={8} sx={{ display: "flex", }} gap={3}>
-                                    <Controls.Grid item  >
-                                        <Controls.Button variant="outlined" sx={{ textTransform: 'initial', fontSize: { xs: '12px' } }}>
-                                            Buy now
-                                        </Controls.Button>
-                                    </Controls.Grid>
-                                    <Controls.Grid item   >
-                                        <Controls.Button variant="primary" sx={{ textTransform: 'initial', fontSize: { xs: '12px' } }}>Add To Cart</Controls.Button>
-                                    </Controls.Grid>
+                                <Controls.Grid item xs={10} sm={8} md={6}lg={4} sx={{ display: "flex", }} gap={3}>
+                                {isProductInCart(product._id) ? (
+                                            <Controls.Button
+                                                variant='contained'
+                                                sx={{ textTransform: "initial", backgroundColor: "lightcoral" }}
+                                                onClick={() => handleRemoveFromCart(product._id)}
+                                            >
+                                                Remove from Cart
+                                            </Controls.Button>
+                                        ) : (
+                                            <Controls.Grid container spacing={2} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                                                <Controls.Grid item>
+                                                    <Controls.Button variant="outlined" sx={{ textTransform: 'initial', fontSize: { xs: '12px' } }} onClick={()=>handleBuynow(product._id)}>
+                                                        Buy now
+                                                    </Controls.Button>
+                                                </Controls.Grid>
+
+                                                <Controls.Grid item>
+                                                    <Controls.Button
+                                                        variant="primary"
+                                                        sx={{ textTransform: 'initial', fontSize: { xs: '12px' } }}
+                                                        onClick={() => handleAddToCart(product._id)}
+                                                    >
+                                                        Add to Cart
+                                                    </Controls.Button>
+                                                </Controls.Grid>
+                                            </Controls.Grid>
+                                        )}
                                 </Controls.Grid>
                             </Controls.Grid>
                         </Controls.Grid>
