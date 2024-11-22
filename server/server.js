@@ -87,16 +87,7 @@ AdminJS.registerAdapter({
 const adminJs = new AdminJS({
   databases: [mongoose],
   rootPath: '/adminpanel',
-  // options:{
-  //   properties:{
-  //     type:'button',
-  //     components:{
-  //       component:Components.Components,
-  //     }
-  //   },
-  // },
  
-  // componentLoader
 });
 
 
