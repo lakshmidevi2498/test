@@ -9,39 +9,35 @@ import theme from '../utilities/theme';
 import { getToken, getUserId } from './GlobalFunctionsComponent';
 
 const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
-  const [activeLink, setActiveLink] = useState('Home');
-  const [name, setName] = useState('')
+  const [activeLink, setActiveLink] = useState('Home'); 
+  const [named, setNamed] = useState('')
   const [wishlistCount, setWishlistCount] = useState(0)
   const [cartCount, setCartCount] = useState(0)
   const [checkoutCount, setCheckoutCount] = useState(0)
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const isMobile = useMediaQuery('(max-width: 600px)');
+  const isMobile = useMediaQuery('(max-width: 600px)'); 
   const [token ,setToken] = useState(null)
 
-  useEffect(()=>{
-    const token = localStorage.getItem("Token") || localStorage.getItem("googleToken")
-    setToken(token)
-  },[])
 
-  // useEffect(() => {
-  //   const storedUsername = localStorage.getItem('username');
-  //   if (storedUsername) {
-  //     setName(storedUsername);
-  //   }
-  //   console.log("name in navbar",name ,"fsdf",storedUsername)
-  // }, []);   
+
+
+ 
+  const Token = localStorage.getItem("googleToken") || localStorage.getItem("Token");
+const name = localStorage.getItem('username') || localStorage.getItem('signinUserName') || localStorage.getItem('signupUserName');
+
+  useEffect(() => { 
+    setToken(Token); 
+  }, [Token]);  
+  
 
   
+ 
+  
   useEffect(() => {
-    const interval = setInterval(() => {
-      const username = localStorage.getItem('username') || 
-                       localStorage.getItem('signinUserName') || 
-                       localStorage.getItem('signupUserName');
-      setName(username);  
-    });  
-
-    return () => clearInterval(interval);  
-  }, []); 
+    if (name) {
+      setNamed(name);
+    } 
+  }, [name]);   
 
   const loadWishlist = useSelector((state) => state.loadwishlist.data || {});
   const loadCartData = useSelector((state) => state.loadcartproducts.data || {});
@@ -313,8 +309,8 @@ const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
                 </Controls.Grid>
                 <Controls.Grid item sx={{display:value5}}>
                 {token ? (
-                    <Controls.Avatar onClick={handleNavigate} sx={{ bgcolor: getAvatarColor(name),fontSize:{xs:"small",sm:"medium",md:"large"},width: { xs: 30, sm: 35, md: 40 }, height: { xs: 30, sm: 35, md: 40 } }}>
-                    {(name ? name.charAt(0) :"").toUpperCase()}
+                    <Controls.Avatar onClick={handleNavigate} sx={{ bgcolor: getAvatarColor(named),fontSize:{xs:"small",sm:"medium",md:"large"},width: { xs: 30, sm: 35, md: 40 }, height: { xs: 30, sm: 35, md: 40 } }}>
+                    {( named ? named.charAt(0) :"").toUpperCase()}
                   </Controls.Avatar>
                 ) : (
                   <Controls.Grid item sx={{display:"flex",color:theme.palette.one.links,cursor:"pointer"}} mt={1}>
