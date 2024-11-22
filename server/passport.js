@@ -1,9 +1,8 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Strategy as FacebookStrategy } from "passport-facebook";
-// import userSchema from "./models/userSchemaModal";
+import userSchema from './models/userSchemaModal.js';
 import dotenv from 'dotenv';
-import userSchemaModal from "./models/userSchemaModal.js";
 dotenv.config();
 
  
@@ -14,7 +13,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://test-3ahx.onrender.com/auth/google/callback", 
+      callbackURL: "http://localhost:5050/auth/google/callback", 
       passReqToCallback: true
     },
     async (req, accessToken, refreshToken, profile, done) => {
@@ -24,9 +23,9 @@ passport.use(
           throw new Error('Profile ID not found');
         }
 
-        const user = await userSchemaModal.findOne({ googleId: profile.id });
+        const user = await userSchema.findOne({ googleId: profile.id });
         if (!user) {
-          const newUser = await userSchemaModal.create({
+          const newUser = await userSchema.create({
             googleId: profile.id,
             name: profile.displayName || 'No Name',
             email: profile.emails[0].value,
@@ -51,7 +50,7 @@ passport.use(
     {
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET,
-      callbackURL: "https://test-3ahx.onrender.com/auth/facebook/callback",
+      callbackURL: "http://localhost:5050/auth/facebook/callback",
       // profileFields: ['id', 'displayName', 'photos', 'email'], // Ensure email is included
     },
     async (accessToken, refreshToken, profile, done) => {
@@ -59,10 +58,10 @@ passport.use(
         console.log("refreshToken Token:", refreshToken);  
         console.log("Access Token:", accessToken);  
          
-        let user = await userSchemaModal.findOne({ facebookId: profile.id });
+        let user = await userSchema.findOne({ facebookId: profile.id });
 
         if (!user) {
-          user = new userSchemaModal({
+          user = new userSchema({
             facebookId: profile.id,   
             name: profile.displayName,
             profilePicture: profile.photos && profile.photos[0] ? profile.photos[0].value : null,  
@@ -87,7 +86,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await userSchemaModal.findById(id); // Assuming you meant userSchema instead of GoogleUser
+    const user = await userSchema.findById(id); // Assuming you meant userSchema instead of GoogleUser
     done(null, user);
   } catch (err) {
     done(err, null);

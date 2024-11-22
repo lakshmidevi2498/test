@@ -6,6 +6,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useSelector } from 'react-redux';
 import { deepOrange, deepPurple, teal } from '@mui/material/colors';
 import theme from '../utilities/theme';
+import { getToken, getUserId } from './GlobalFunctionsComponent';
 
 const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
   const [activeLink, setActiveLink] = useState('Home');
@@ -16,18 +17,19 @@ const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const isMobile = useMediaQuery('(max-width: 600px)');
   const [token ,setToken] = useState(null)
+
   useEffect(()=>{
     const token = localStorage.getItem("Token") || localStorage.getItem("googleToken")
     setToken(token)
   },[])
 
-  useEffect(() => {
-    const storedUsername = localStorage.getItem('username');
-    if (storedUsername) {
-      setName(storedUsername);
-    }
-    console.log("name in navbar",name ,"fsdf",storedUsername)
-  }, []);   
+  // useEffect(() => {
+  //   const storedUsername = localStorage.getItem('username');
+  //   if (storedUsername) {
+  //     setName(storedUsername);
+  //   }
+  //   console.log("name in navbar",name ,"fsdf",storedUsername)
+  // }, []);   
 
   
   useEffect(() => {
@@ -36,7 +38,7 @@ const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
                        localStorage.getItem('signinUserName') || 
                        localStorage.getItem('signupUserName');
       setName(username);  
-    }, 1000);  
+    });  
 
     return () => clearInterval(interval);  
   }, []); 
@@ -58,10 +60,12 @@ const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
   console.log("wishlistItems", wishlistItems);
   console.log("checkoutItems", checkoutItems);
 
- 
 
  
   useEffect(() => {
+    let userId = getUserId()
+    let token= getToken()
+    if(userId && token){
     if (Array.isArray(cartItems)) {
       const totalCartItems = cartItems.reduce((acc, item) => {
          
@@ -71,13 +75,17 @@ const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
   
       console.log("Total Cart Items:", totalCartItems);
       setCartCount(totalCartItems);
-    } else {
+    } 
+  }else {
       console.warn("cartItems is not an array:", cartItems);
     }
   }, [loadCartData]);
 
   
   useEffect(() => {
+    let userId = getUserId()
+    let token= getToken()
+    if(userId && token){
     if (Array.isArray(wishlistItems)) {
       const totalWishlistItems = wishlistItems.reduce((acc, item) => {
         const quantity = parseInt(item.quantity ,10) || ""; 
@@ -85,12 +93,16 @@ const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
       }, 0)
       console.log("Total Wishlist Items:", totalWishlistItems);
       setWishlistCount(totalWishlistItems);
-    } else {
+    } 
+  }else {
       console.warn("wishlistItems is not an array:", wishlistItems);
     }
   }, [loadWishlist]);
 
   useEffect(() => {
+    let userId = getUserId()
+    let token= getToken()
+    if(userId && token){
     if (Array.isArray(checkoutItems)) {
       const totalCheckoutItems = checkoutItems.reduce((acc, item) => {
         const quantity = parseInt(item.quantity ,10) || ""; 
@@ -98,7 +110,8 @@ const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
       }, 0)
       console.log("Total checkoutItems:", totalCheckoutItems);
       setCheckoutCount(totalCheckoutItems);
-    } else {
+    } 
+  }else {
       console.warn("checkoutItems is not an array:", checkoutItems);
     }
   }, [loadCheckout,checkoutItems]);

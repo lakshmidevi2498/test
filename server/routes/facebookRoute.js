@@ -3,7 +3,8 @@ import passport from 'passport';
 import jwt from 'jsonwebtoken'; 
 import '../passport.js';   
 
-const router = express.Router(); 
+const router = express.Router();
+const CLIENT_URI = "http://localhost:3000/";
 
 router.get('/facebook', (req, res, next) => {
   console.log('Facebook Auth route hit');
@@ -50,7 +51,7 @@ router.get('/facebook/callback',
         authType: "facebook"
       }).toString();
       console.log("query", query);
-      res.redirect(`https://test-1-ekpw.onrender.com/?${query}`);
+      res.redirect(`http://localhost:3000/?${query}`);
     } catch (error) {
       console.error('Error during Facebook callback:', error);
       res.status(500).send({ message: 'Server Error' });

@@ -20,11 +20,11 @@ export const deleteCartError = (error) => (
     payload:error
 })
 
-export const deleteCartInitiate = (userId,productId ,navigate) => {
+export const deleteCartInitiate = (token,userId,productId ,navigate) => {
     return async (dispatch)=>{
         dispatch(deleteCartStart())
         try {
-          const deleteCartdata = await deleteCartApi(userId,productId)
+          const deleteCartdata = await deleteCartApi(token,userId,productId)
           dispatch(deleteCartSuccess(deleteCartdata))
           // toast.success("product deleted from cart")
         //   navigate('/')

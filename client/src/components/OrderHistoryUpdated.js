@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import OrderCancellationComponent from './OrderCancellationComponent'
 import  {useSelector ,useDispatch} from 'react-redux'
 import { loadOrderHistoryInitiate } from '../redux/action/loadOrderHistoryAction'
-import { getUserId } from './GlobalFunctionsComponent'
+import { getToken, getUserId } from './GlobalFunctionsComponent'
 
 const OrderHistoryUpdated = () => {
 
@@ -38,8 +38,9 @@ const OrderHistoryUpdated = () => {
 
     useEffect(() => {
       const userId = getUserId();
-      if (userId) {
-          dispatch(loadOrderHistoryInitiate(userId));
+      let token = getToken()
+      if (userId && token) {
+          dispatch(loadOrderHistoryInitiate(token,userId));
       }
   }, [dispatch]);
 

@@ -14,7 +14,7 @@ import { NavLink } from 'react-router-dom';
 import theme from '../utilities/theme';
 import ProductsCardsComponent from './ProductsCardsComponent' 
 import { postCheckoutInitiate } from '../redux/action/postCheckoutAction';
-import { getUserId } from './GlobalFunctionsComponent';
+import { getToken, getUserId } from './GlobalFunctionsComponent';
 
 const ProductsComponent = () => {
     const [loading, setLoading] = useState(true);
@@ -64,9 +64,10 @@ const ProductsComponent = () => {
 
     useEffect(() => {
         let userId = getUserId();
+        let token = getToken()
  
-        if(userId){
-        dispatch(loadCartInitiate(userId));
+        if(userId && token){
+        dispatch(loadCartInitiate(token,userId));
         }
     }, [dispatch]);
 
@@ -74,37 +75,45 @@ const ProductsComponent = () => {
 
     const isProductInCart = (productId) => {
 
-
+        let userId = getUserId()
+        let token = getToken()
+         if(userId && token){
         const cartProducts = loadCartData.data?.cartProducts?.productId || [];
 
         console.log("cartProducts", cartProducts)
         return Array.isArray(cartProducts) && cartProducts.some((item) => item._id === productId);
-
+         }
     };
 
     const isProductInWishlist = (productId) => {
+        let userId = getUserId()
+        let token = getToken()
+         if(userId && token){
         const isWishlist = loadWishlist?.data?.wishlistData?.productId ?? [];
 
         console.log("isWishlist", isWishlist)
         return Array.isArray(isWishlist) && isWishlist.some((item) => item._id === productId);
+         }
 
     }
 
     const handleAddToCart = async (productId) => {
         let userId = getUserId(); 
-        if(userId){
+        let token = getToken()
+        if(userId && token){
 
-        await dispatch(postCartInitiate(userId, productId));
-        await dispatch(loadCartInitiate(userId));
+        await dispatch(postCartInitiate(token ,userId, productId));
+        await dispatch(loadCartInitiate(token,userId));
         }
     };
 
     const handleRemoveFromCart = async (productId) => {
         let userId = getUserId();
+        let token = getToken()
  
-        if(userId){
-        await dispatch(deleteCartInitiate(productId, userId))
-        await dispatch(loadCartInitiate(userId));
+        if(userId && token){
+        await dispatch(deleteCartInitiate( token , userId,productId))
+        await dispatch(loadCartInitiate(token,userId));
         }
 
 
@@ -112,10 +121,11 @@ const ProductsComponent = () => {
 
     const handleRemoveFromWishlist = async (productId) => {
         let userId = getUserId();
+        let token =  getToken()
  
-        if(userId){
-        await dispatch(deleteWishlistInitiate(userId, productId))
-        await dispatch(loadWishlistInitiate(userId))
+        if(userId && token){
+        await dispatch(deleteWishlistInitiate(token,userId, productId))
+        await dispatch(loadWishlistInitiate(token,userId))
         }
 
 
@@ -123,11 +133,12 @@ const ProductsComponent = () => {
 
     const handleAddToWishlist = async (productId) => {
         let userId = getUserId();
+        let token= getToken()
  
-        if(userId){
+        if(userId && token){
 
-        await dispatch(postWishlistInitiate(userId, productId))
-        await dispatch(loadWishlistInitiate(userId))
+        await dispatch(postWishlistInitiate(token,userId, productId))
+        await dispatch(loadWishlistInitiate(token,userId))
         }
 
     }
@@ -155,8 +166,9 @@ const ProductsComponent = () => {
 
         try {
             let userId = getUserId()
-            if(userId){
-            await dispatch(postCheckoutInitiate(userId, productId))
+            let token=  getToken()
+            if(userId && token){
+            await dispatch(postCheckoutInitiate(token,userId, productId))
             navigate('/checkout')
             }
             

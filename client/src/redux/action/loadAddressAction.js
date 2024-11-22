@@ -20,11 +20,11 @@ export const loadAddressError = (error) => (
     payload:error
 })
 
-export const loadAddressInitiate = (userId) => {
+export const loadAddressInitiate = (token,userId) => {
     return async (dispatch)=>{
         dispatch(loadAddressStart())
         try {
-          const loadAddressdata = await loadAddressApi(userId)
+          const loadAddressdata = await loadAddressApi(token,userId)
           dispatch(loadAddressSuccess(loadAddressdata))
         //   navigate('/')
   

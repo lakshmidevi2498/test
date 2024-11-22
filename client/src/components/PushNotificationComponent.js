@@ -62,7 +62,7 @@ const PushNotificationComponent = () => {
         
         const username = localStorage.getItem('signinUserName') || localStorage.getItem('signupUserName') || localStorage.getItem('username') 
     setName(username)
-    console.log("username in navbar",username)
+    console.log("username in notification",username)
     
 
   }, [])

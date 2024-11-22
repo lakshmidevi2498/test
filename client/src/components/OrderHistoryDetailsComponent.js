@@ -4,7 +4,7 @@ import theme from '../utilities/theme';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadOrderHistoryInitiate } from '../redux/action/loadOrderHistoryAction';
 import { useNavigate } from 'react-router-dom';
-import {getUserId} from './GlobalFunctionsComponent'
+import {getToken, getUserId} from './GlobalFunctionsComponent'
 
 const OrderHistoryDetailsComponent = () => {
 
@@ -22,8 +22,9 @@ const OrderHistoryDetailsComponent = () => {
     useEffect(() => {
       const fetchOrderHistory = () => {
         const userId = getUserId();
-        if (userId) {
-          dispatch(loadOrderHistoryInitiate(userId));
+        let token = getToken()
+        if (userId && token) {
+          dispatch(loadOrderHistoryInitiate(token,userId));
         }
       };
   

@@ -8,7 +8,8 @@ import { loadCartInitiate } from '../redux/action/loadCartAction'
 import { deleteCartInitiate } from '../redux/action/deleteCartAction'
 import theme from '../utilities/theme'
 import { useNavigate } from 'react-router-dom'
-import {getUserId} from './GlobalFunctionsComponent'
+import {getToken, getUserId} from './GlobalFunctionsComponent'
+import { postCheckoutInitiate } from '../redux/action/postCheckoutAction'
 
 const WishlistComponent = () => {
     const [products, setProducts] = useState([]) 
@@ -28,8 +29,9 @@ const WishlistComponent = () => {
     useEffect(() => {
         const fetchWishlist = async () => {
             let userId = getUserId();
-if(userId){
-            await dispatch(loadWishlistInitiate(userId))
+            let token = getToken()
+if(userId && token){
+            await dispatch(loadWishlistInitiate(token,userId))
 }
 
         }
@@ -46,12 +48,13 @@ if(userId){
 
         }
 
-    }, [loadWishlist])
+    }, [loadWishlist,loadWishlist.data,products])
 
     const handleRemoveFromWishlist = async (productId) => {
         let userId = getUserId();
-        console.log("current userId:", userId)
-        await dispatch(deleteWishlistInitiate(userId, productId))
+        let token = getToken()
+        console.log("current userId:", userId ,token)
+        await dispatch(deleteWishlistInitiate(token,userId, productId))
         //  dispatch(loadWishlistInitiate(userId))
         const freshwishlistdata = deleteWishlistData.data?.wishlist?.productId || [];
 
@@ -92,6 +95,20 @@ if(userId){
     const handleNavigate = () => {
         navigate('/')
     }
+
+    const handleAddToBag = async (productId) => {
+        let userId = getUserId();
+        let token = getToken()
+    
+      console.log("userId,productId", userId, productId ,token)
+      if(userId){
+        await dispatch(deleteWishlistInitiate(token,userId, productId))
+        await dispatch(loadWishlistInitiate(token,userId))
+    
+        await dispatch(postCheckoutInitiate(token,userId, productId))
+      }
+    
+      }
 
     const text = "Your wishlist awaits! Dreams are just a click away from coming true"
     const words = text.split(" ");
@@ -137,6 +154,7 @@ if(userId){
                                 padding: '10px',
                                 borderTopLeftRadius: "30px",
                                 borderBottomRightRadius: "30px",
+                                 border:`1px solid ${theme.palette.one.bg}`
                             }}>
 
                                 <Controls.FavoriteIcon sx={{ position: "absolute", top: 18, right: 18, color: "red" }} onClick={() => handleRemoveFromWishlist(item._id)} />
@@ -158,7 +176,14 @@ if(userId){
                                     </Controls.Grid>
                                 </Controls.CardContent>
                                 <Controls.CardActions>
-                                    {isProductInCart(item._id) ? (
+                                <Controls.Button
+                                            variant='contained'
+                                            sx={{ textTransform: "initial", backgroundColor: theme.palette.one.title }}
+                                            onClick={() => handleAddToBag(item._id)}
+                                        >
+                                            Add to Bag
+                                        </Controls.Button>
+                                    {/* {isProductInCart(item._id) ? (
                                         <Controls.Button
                                             variant='contained'
                                             sx={{ textTransform: "initial", backgroundColor: "lightcoral" }}
@@ -174,7 +199,7 @@ if(userId){
                                         >
                                             Add to Cart
                                         </Controls.Button>
-                                    )}
+                                    )} */}
                                 </Controls.CardActions>
                             </Controls.Card>
                         </Controls.Grid>

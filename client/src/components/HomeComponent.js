@@ -7,7 +7,7 @@ const HomeComponent = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  // Extract parameters dynamically
+  
   const token = searchParams.get('token');
   const id = searchParams.get('id');
   const username = searchParams.get('name');
@@ -53,7 +53,7 @@ const HomeComponent = () => {
             sx={{
               position: 'absolute',
               top: { xs: '25%', sm: '45%', md: '65%' },
-              right: { xs: '-10%', sm: '-17%', md: '-19%', lg: '-18%', xl: '-5%' },
+              right: { xs: '-10%', sm: '-27%', md: '-29%', lg: '-18%', xl: '-5%' },
               transform: 'translate(-50%, -50%)',
               zIndex: 2,
             }}

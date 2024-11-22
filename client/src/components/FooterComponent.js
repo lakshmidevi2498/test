@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import theme from '../utilities/theme';
 
 const FooterComponent = () => {
+    
     const navigate = useNavigate()
     const links = [ 
         { name: 'Vegetables', href: '/vegetables' },

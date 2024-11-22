@@ -20,11 +20,11 @@ export const postAddressError = (error) => (
     payload:error
 })
 
-export const postAddressInitiate = (values,userId,navigate) => {
+export const postAddressInitiate = (token,values,userId,navigate) => {
     return async (dispatch)=>{
         dispatch(postAddressStart())
         try {
-          const postAddressdata = await postAddressApi(values,userId)
+          const postAddressdata = await postAddressApi(token,values,userId)
           dispatch(postAddressSuccess(postAddressdata))
           // toast.success("product is added to Address ")
         //   navigate('/')

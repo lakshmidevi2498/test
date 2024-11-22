@@ -20,11 +20,11 @@ export const  OrderHistoryPatchError = (error) => (
     payload:error
 })
 
-export const OrderHistoryPatchInitiate = (id ,body) => {
+export const OrderHistoryPatchInitiate = (token,id ,body) => {
     return async (dispatch)=>{
         dispatch(OrderHistoryPatchStart())
         try {
-          const OrderHistoryPatchdata = await OrderHistorypatchApi(id ,body)
+          const OrderHistoryPatchdata = await OrderHistorypatchApi(token,id ,body)
           dispatch(OrderHistoryPatchSuccess(OrderHistoryPatchdata))
         //   navigate('/')
   

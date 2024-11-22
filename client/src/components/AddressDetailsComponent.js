@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadAddressInitiate } from '../redux/action/loadAddressAction';
 import { useNavigate } from 'react-router-dom';
 import theme from '../utilities/theme';
-import { getUserId } from './GlobalFunctionsComponent';
+import { getToken, getUserId } from './GlobalFunctionsComponent';
 
 const AddressDetailsComponent = () => {
    
@@ -20,11 +20,12 @@ const AddressDetailsComponent = () => {
 
     useEffect(() => {
         let userId = getUserId()
+        let token = getToken()
        
 
-        if (userId) {
+        if (userId && token) {
             try {
-                dispatch(loadAddressInitiate(userId));
+                dispatch(loadAddressInitiate(token,userId));
             } catch (error) {
                 console.error("Error fetching addresses:", error);
             }

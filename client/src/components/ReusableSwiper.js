@@ -15,7 +15,7 @@ import { postWishlistInitiate } from '../redux/action/postWishlistAction';
 import { loadWishlistInitiate } from '../redux/action/loadWishlistAction';
 import { deleteWishlistInitiate } from '../redux/action/deleteWishlistAction'; 
 import { postCheckoutInitiate } from '../redux/action/postCheckoutAction';
-import { getUserId } from './GlobalFunctionsComponent';
+import { getToken, getUserId } from './GlobalFunctionsComponent';
 
 
 const ReusableSwiper = ({ product, topValue, leftValue }) => {
@@ -43,18 +43,22 @@ const ReusableSwiper = ({ product, topValue, leftValue }) => {
    
 
 const isProductInWishlist = (productId) => {
+  let userId = getUserId()
+        let token = getToken()
+         if(userId && token){
     const isWishlist = loadWishlist?.data?.wishlistData?.productId ?? [];
 
     console.log("isWishlist", isWishlist)
     return Array.isArray(isWishlist) && isWishlist.some((item) => item._id === productId);
-
+         }
 }
 const handleRemoveFromWishlist = async (productId) => {
     let userId = getUserId(); 
+    let token = getToken()
 
-   if(userId){
-    await dispatch(deleteWishlistInitiate(userId, productId))
-    await dispatch(loadWishlistInitiate(userId))
+   if(userId && token){
+    await dispatch(deleteWishlistInitiate(token,userId, productId))
+    await dispatch(loadWishlistInitiate(token,userId))
    }
 
 
@@ -62,11 +66,11 @@ const handleRemoveFromWishlist = async (productId) => {
 
 const handleAddToWishlist = async (productId) => {
     let userId = getUserId(); 
+    let token = getToken()
+    if(userId && token){
 
-    if(userId){
-
-    await dispatch(postWishlistInitiate(userId, productId))
-    await dispatch(loadWishlistInitiate(userId))
+    await dispatch(postWishlistInitiate(token,userId, productId))
+    await dispatch(loadWishlistInitiate(token,userId))
     }
 
 }
@@ -74,39 +78,44 @@ const handleAddToWishlist = async (productId) => {
 const handleAddToCart = async (productId) => {
     let userId = getUserId();
  
-    if(userId){
+    let token = getToken()
+    if(userId && token){
 
-    await dispatch(postCartInitiate(userId, productId));
-    await dispatch(loadCartInitiate(userId));
+    await dispatch(postCartInitiate(token,userId, productId));
+    await dispatch(loadCartInitiate(token,userId));
     }
 };
 
 const handleRemoveFromCart = async (productId) => {
     let userId = getUserId();
  
-    if(userId){
-    await dispatch(deleteCartInitiate(userId,productId))
-    await dispatch(loadCartInitiate(userId));
+    let token = getToken()
+    if(userId && token){
+    await dispatch(deleteCartInitiate(token,userId,productId))
+    await dispatch(loadCartInitiate(token,userId));
     }
 
 };
 
 const isProductInCart = (productId) => {
 
-
+  let userId = getUserId()
+  let token = getToken()
+   if(userId && token){
     const cartProducts = loadCartData.data?.cartProducts?.productId || [];
 
     console.log("cartProducts", cartProducts)
     return Array.isArray(cartProducts) && cartProducts.some((item) => item._id === productId);
-
+   }
 };
 
 const handleBuynow = async (productId) => {
 
   try {
       let userId = getUserId()
-      if(userId){
-      await dispatch(postCheckoutInitiate(userId, productId))
+      let token = getToken()
+    if(userId && token){
+      await dispatch(postCheckoutInitiate(token,userId, productId))
       navigate('/checkout')
       }
       

@@ -1,13 +1,14 @@
 import API from "../../API/API";
-const api = new API(); 
+const api = new API();
+const endPoints = "user/signin";
 export const facebookLoginApi = async (user) => {
   return new Promise((resolve, reject) => {
   
-    const authWindow = window.open("https://test-3ahx.onrender.com/auth/facebook", "_self");
+    const authWindow = window.open("http://localhost:5050/auth/facebook", "_self");
 
  
     window.addEventListener("message", (event) => {
-      if (event.origin !== "https://test-1-ekpw.onrender.com") return;  
+      if (event.origin !== "http://localhost:3000") return;  
 
       const { user, token, error } = event.data;
 

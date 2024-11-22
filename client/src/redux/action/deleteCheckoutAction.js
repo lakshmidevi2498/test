@@ -20,11 +20,11 @@ export const deleteCheckoutError = (error) => (
     payload:error
 })
 
-export const deleteCheckoutInitiate = (userId,productId ,navigate) => {
+export const deleteCheckoutInitiate = (token,userId,productId ,navigate) => {
     return async (dispatch)=>{
         dispatch(deleteCheckoutStart())
         try {
-          const deleteCheckoutdata = await deleteCheckoutApi(userId,productId)
+          const deleteCheckoutdata = await deleteCheckoutApi(token,userId,productId)
           dispatch(deleteCheckoutSuccess(deleteCheckoutdata))
           // toast.success("product deleted from Checkout")
         //   navigate('/')

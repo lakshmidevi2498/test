@@ -20,11 +20,11 @@ export const loadCheckoutError = (error) => (
     payload:error
 })
 
-export const loadCheckoutInitiate = (userId) => {
+export const loadCheckoutInitiate = (token,userId) => {
     return async (dispatch)=>{
         dispatch(loadCheckoutStart())
         try {
-          const loadCheckoutdata = await loadCheckoutApi(userId)
+          const loadCheckoutdata = await loadCheckoutApi(token,userId)
           dispatch(loadCheckoutSuccess(loadCheckoutdata))
         //   navigate('/')
   

@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch,useSelector } from 'react-redux';
 import { loadProfileInitiate } from '../redux/action/loadProfileAction';
+import { getToken } from './GlobalFunctionsComponent'; 
 
 const MyProfileComponent = () => {
     const [userData, setUserData] = useState(null);
@@ -27,8 +28,7 @@ const MyProfileComponent = () => {
 
     const fetchLoginUserData = async () => {
         try {
-            const token = localStorage.getItem('Token') || localStorage.getItem('googleToken')  
-            console.log("token in profile page",token)
+           let token = getToken()
 
             if (!token) {
                 throw new Error('No token found! Please log in.');
@@ -56,9 +56,11 @@ const MyProfileComponent = () => {
        
         localStorage.removeItem("Token");
         localStorage.removeItem("googleToken");
+        localStorage.removeItem('signinUserId')
         
         
-        localStorage.clear();
+        // localStorage.clear();
+        console.log("After Logout LocalStorage:", localStorage);
         
          
         navigate('/');

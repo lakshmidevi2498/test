@@ -1,11 +1,15 @@
 import API from "../../API/API";
 const api = new API();
 const endPoints = "cart/get";
-export const loadCartApi = async ( userId) => {
+export const loadCartApi = async (token, userId) => {
   return new Promise(async (resolve, reject) => {
     try {
       console.log("this is post call in API---->",endPoints);
-      const response = await api.get(`${endPoints}?userId=${userId}`);
+      const response = await api.get(`${endPoints}?userId=${userId}`,{
+        headers:{
+          authorization:`Bearer ${token}`,
+        }
+      });
       console.log("fetched user in loadCartApi", response);
       console.log("fetched user in loadCartApi", response.data);
       resolve(response);

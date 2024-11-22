@@ -20,11 +20,11 @@ export const postCheckoutError = (error) => (
     payload:error
 })
 
-export const postCheckoutInitiate = (userId,productId ) => {
+export const postCheckoutInitiate = (token,userId,productId ) => {
     return async (dispatch)=>{
         dispatch(postCheckoutStart())
         try {
-          const postCheckoutdata = await postCheckoutApi(userId,productId)
+          const postCheckoutdata = await postCheckoutApi(token,userId,productId)
           dispatch(postCheckoutSuccess(postCheckoutdata))
           // toast.success("product is added to checkout page")
         //   navigate('/')

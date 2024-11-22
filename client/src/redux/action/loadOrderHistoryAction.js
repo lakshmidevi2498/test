@@ -20,11 +20,11 @@ export const loadOrderHistoryError = (error) => (
     payload:error
 })
 
-export const loadOrderHistoryInitiate = (userId) => {
+export const loadOrderHistoryInitiate = (token,userId) => {
     return async (dispatch)=>{
         dispatch(loadOrderHistoryStart())
         try {
-          const loadOrderHistorydata = await loadOrderHistoryApi(userId)
+          const loadOrderHistorydata = await loadOrderHistoryApi(token,userId)
           dispatch(loadOrderHistorySuccess(loadOrderHistorydata))
         //   navigate('/')
   

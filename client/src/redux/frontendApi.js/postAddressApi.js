@@ -1,11 +1,13 @@
 import API from "../../API/API";
 const api = new API();
 const endPoints = "address/post";
-export const postAddressApi = async (values,userId) => {
+export const postAddressApi = async (token,values,userId) => {
   return new Promise(async (resolve, reject) => {
     try {
       console.log("this is post call in API---->",endPoints);
-      const response = await api.post(`${endPoints}`,{values,userId});
+      const response = await api.post(`${endPoints}`,{values,  headers: {
+        authorization: `Bearer ${token}`,
+      },userId });
       console.log("fetched user in postAddressApi", response);
       console.log("fetched user in postAddressApi", response.data);
       resolve(response);

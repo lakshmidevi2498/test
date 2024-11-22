@@ -20,11 +20,11 @@ export const postCartError = (error) => (
     payload:error
 })
 
-export const postCartInitiate = (userId,productId,navigate) => {
+export const postCartInitiate = (token,userId,productId,navigate) => {
     return async (dispatch)=>{
         dispatch(postCartStart())
         try {
-          const postCartdata = await postCartApi(userId,productId)
+          const postCartdata = await postCartApi(token,userId,productId)
           dispatch(postCartSuccess(postCartdata))
           // toast.success("product is added to cart ")
         //   navigate('/')

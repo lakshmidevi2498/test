@@ -8,7 +8,7 @@ import axios from 'axios';
 import {postAddressInitiate} from'../redux/action/postAddressAction'
 import { useNavigate } from 'react-router-dom';
 import theme from '../utilities/theme';
-import {getUserId} from './GlobalFunctionsComponent'
+import {getToken, getUserId} from './GlobalFunctionsComponent'
 
 const AddressForm = () => { 
     const navigate = useNavigate()
@@ -37,12 +37,13 @@ const AddressForm = () => {
 
     const onSubmit = async (values, actions) => {
         let userId = getUserId()
+        let token = getToken()
     
         console.log("userId ", userId);
         console.log("Form Values:", values);
         actions.resetForm();
-        if(userId){
-        await dispatch(postAddressInitiate(values,userId))
+        if(userId && token){
+        await dispatch(postAddressInitiate(token,values,userId))
         navigate('/addressdetails')
         } 
 

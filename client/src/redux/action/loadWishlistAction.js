@@ -20,11 +20,11 @@ export const loadWishlistError = (error) => (
     payload:error
 })
 
-export const loadWishlistInitiate = (userId) => {
+export const loadWishlistInitiate = (token,userId) => {
     return async (dispatch)=>{
         dispatch(loadWishlistStart())
         try {
-          const loadWishlistdata = await loadWishlistApi(userId)
+          const loadWishlistdata = await loadWishlistApi(token,userId)
           dispatch(loadWishlistSuccess(loadWishlistdata))
         //   navigate('/')
   

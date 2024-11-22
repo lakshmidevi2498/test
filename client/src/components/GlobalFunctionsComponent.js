@@ -14,3 +14,16 @@ export const getUserId = () => {
         return null;
     }
 };
+
+export const getToken = () => {
+    const token = localStorage.getItem("Token");
+    const googleToken = localStorage.getItem("googleToken"); 
+    
+    if (token !== null ) {
+        return token;
+    } else if (googleToken !== null) {
+        return googleToken;
+    }  else {
+        return null;
+    }
+};

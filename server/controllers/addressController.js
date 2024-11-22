@@ -38,7 +38,7 @@ export const getAddressController = async (req,res) => {
 
         const userAddress = await addressSchema.find({userId})
         .populate('userId')
-        // console.log("userAddress",userAddress)
+        console.log("userAddress",userAddress)
        
         
     res.status(201).json({ userAddress });

@@ -4,7 +4,7 @@ import theme from '../utilities/theme';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadOrderHistoryInitiate } from '../redux/action/loadOrderHistoryAction';
 import OrderStatusComponent from './OrderStatusComponent';
-import { getUserId } from './GlobalFunctionsComponent';
+import { getToken, getUserId } from './GlobalFunctionsComponent';
 
 const OrderHistoryComponent = () => {
   const [orderHistory, setOrderHistory] = useState([]); 
@@ -18,8 +18,9 @@ const OrderHistoryComponent = () => {
   useEffect(() => {
     const fetchOrderHistory = () => {
       const userId = getUserId();
-      if (userId) {
-        dispatch(loadOrderHistoryInitiate(userId));
+      let token = getToken()
+      if (userId && token) {
+        dispatch(loadOrderHistoryInitiate(token,userId));
       }
     };
 

@@ -10,7 +10,8 @@ import { postCheckoutInitiate } from '../redux/action/postCheckoutAction';
 import { deleteCartInitiate } from '../redux/action/deleteCartAction';
 import theme from '../utilities/theme';
 import Fade from '@mui/material/Fade';
-import {getUserId} from './GlobalFunctionsComponent'
+import {getToken, getUserId} from './GlobalFunctionsComponent'
+import { loadCheckoutInitiate } from '../redux/action/loadCheckoutAction';
 
 const CartProductsComponent = () => {
 
@@ -36,13 +37,14 @@ const CartProductsComponent = () => {
     const fetchCartProducts = async () => {
       try {
         let userId = getUserId();
+        let token = getToken()
 
-        console.log("current userId:", userId);
+        console.log("current userId:", userId ,token);
 
 
 
-        if (userId) {
-          await dispatch(loadCartInitiate(userId));
+        if (userId && token) {
+          await dispatch(loadCartInitiate(token,userId));
         } else {
           console.error("No valid userId found.");
         }
@@ -58,25 +60,23 @@ const CartProductsComponent = () => {
 
 
   const handleRemoveFromWishlist = async (productId) => {
-    let userId = getUserId();
-
-    console.log("current userId:", userId);
-
-    console.log("current userId:", userId)
+    let userId = getUserId(); 
+    let token = getToken()
     if(userId){
-    await dispatch(deleteWishlistInitiate(userId, productId))
-    await dispatch(loadWishlistInitiate(userId))
+    await dispatch(deleteWishlistInitiate(token,userId, productId))
+    await dispatch(loadWishlistInitiate(token,userId))
     }
 
   }
 
   const handleAddToWishlist = async (productId) => {
     let userId = getUserId();
+    let token = getToken()
 
-    console.log("current userId:", userId);
-    if(userId){
-    await dispatch(postWishlistInitiate(userId, productId))
-    await dispatch(loadWishlistInitiate(userId))
+    console.log("current userId:", userId ,token);
+    if(userId && token){
+    await dispatch(postWishlistInitiate(token,userId, productId))
+    await dispatch(loadWishlistInitiate(token,userId))
     }
   }
 
@@ -103,13 +103,15 @@ const CartProductsComponent = () => {
 
   const handleCheckOut = async (productId) => {
     let userId = getUserId();
+    let token = getToken()
 
-  console.log("userId,productId", userId, productId)
-  if(userId){
-    await dispatch(deleteCartInitiate(userId, productId))
-    await dispatch(loadCartInitiate(userId))
+  console.log("userId,productId", userId, productId ,token)
+  if(userId && token){
+    await dispatch(deleteCartInitiate(token,userId, productId))
+    await dispatch(loadCartInitiate(token,userId))
 
-    dispatch(postCheckoutInitiate(userId, productId))
+    await dispatch(postCheckoutInitiate(token,userId, productId))
+    await dispatch(loadCheckoutInitiate(token,userId))
   }
 
   }
@@ -188,6 +190,7 @@ const CartProductsComponent = () => {
                       padding: '10px',
                       borderTopLeftRadius: "30px",
                       borderBottomRightRadius: "30px",
+                      border:`1px solid ${theme.palette.one.bg}`
                     }}
                     gap={2}
                   >
@@ -260,7 +263,7 @@ const CartProductsComponent = () => {
                           }}
                           onClick={() => handleCheckOut(item._id)}
                         >
-                          Proceed to checkout
+                          Add to bag
                         </Controls.Button>
                       </Controls.Grid>
                     </Controls.CardContent>

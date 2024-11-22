@@ -1,4 +1,4 @@
-export const BASE_URL = "https://test-3ahx.onrender.com/"
+export const BASE_URL = "http://localhost:5050/"
 
 // current working url
 export const STATUS_CODE = {

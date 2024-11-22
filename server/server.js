@@ -22,14 +22,13 @@ import razorpayRoute from './routes/razorpayRoute.js';
 import orderHistoryRoute from './routes/orderHistoryRoute.js';
 import webpush from 'web-push';
 import notificationRoute from './routes/notificationRoute.js'
-import path from 'path';
-// import {ComponentLoader} from 'adminjs'
+import {ComponentLoader} from 'adminjs'
 
-// const componentLoader = new ComponentLoader()
+const componentLoader = new ComponentLoader()
 
-// const Components = {
-//   CustomDashboard: componentLoader.add('LogoutButton', './components/LogoutButton'),
-// }
+const Components = {
+  CustomDashboard: componentLoader.add('LogoutButton', './components/LogoutButton'),
+}
 
 dotenv.config();
 const app = express();
@@ -37,7 +36,7 @@ const PORT = process.env.PORT || 5050;
 
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'https://test-1-ekpw.onrender.com',
+  origin: 'http://localhost:3000',
   methods: ['GET', 'POST', 'DELETE', 'PUT' ],
   credentials: true,
 }));
@@ -47,9 +46,6 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
 }));
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 const apiKeys = {
   publicKey: 'BCoZetIZDVC9nbAkQmdXdLwXwXyEIYeuq1xpJ4Cnqc-TJdf3w9bkbD0JGu4v1kx7uuqBMHnKQPlkIaWPu5Er2uI',
@@ -89,7 +85,16 @@ AdminJS.registerAdapter({
 const adminJs = new AdminJS({
   databases: [mongoose],
   rootPath: '/adminpanel',
-
+  options:{
+    properties:{
+      type:'button',
+      components:{
+        component:Components.Components,
+      }
+    },
+  },
+ 
+  componentLoader
 });
 
 
@@ -110,7 +115,7 @@ app.use('/address', addressRoute);
 app.use('/order', razorpayRoute);
 app.use('/orderhistory',orderHistoryRoute)
 app.use('/buynow',checkoutRoute)
-app.use('/order',orderHistoryRoute)
+app.use('/order/update',orderHistoryRoute)
 app.use('/save-subscription',notificationRoute)
 app.use('/',notificationRoute)
 
@@ -122,15 +127,6 @@ app.get('/logout', (req, res) => {
     res.clearCookie('connect.sid');
     res.status(200).send({ message: 'Logged out successfully' });
   });
-});
-
-
-const __dirname = path.resolve(); // If using ES modules
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-// Catch-all handler for all other routes (must be after API routes)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
  

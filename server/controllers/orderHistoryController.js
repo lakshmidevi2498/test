@@ -45,9 +45,9 @@ export const getOrderHistoryController = async (req, res) => {
 
 export const updateOrderHistoryController = async (req, res) => {
   try {
-    const { orderedStatus, selectedReason ,shippingStatus} = req.body.body;
+    const { orderedStatus, selectedReason ,shippingStatus} = req.body;
     const { id } = req.query;
-    console.log("req.body", req.body.body, req.query);
+    console.log("req.body updateOrderHistoryController", req.body.body, req.query);
 
     if (!orderedStatus) {
       return res.status(400).json({ message: "orderedStatus is required" });

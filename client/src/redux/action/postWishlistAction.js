@@ -20,11 +20,11 @@ export const postWishlistError = (error) => (
     payload:error
 })
 
-export const postWishlistInitiate = (userId,productId,navigate) => {
+export const postWishlistInitiate = (token,userId,productId,navigate) => {
     return async (dispatch)=>{
         dispatch(postWishlistStart())
         try {
-          const postWishlistdata = await postWishlistApi(userId,productId)
+          const postWishlistdata = await postWishlistApi(token,userId,productId)
           dispatch(postWishlistSuccess(postWishlistdata))
           // toast.success("product is added to wishlist")
         //   navigate('/')

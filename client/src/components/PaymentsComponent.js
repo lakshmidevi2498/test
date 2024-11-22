@@ -14,7 +14,7 @@ import { razorpayOrderValidateInitiate } from '../redux/action/razorpayOrderVali
 import { deleteOrderInitiate } from '../redux/action/deleteOrderAction';
 import { loadCheckoutInitiate } from '../redux/action/loadCheckoutAction'; 
 import { sendNotificationInitiate } from '../redux/action/sendNotificationAction';
-import { getUserId } from './GlobalFunctionsComponent';
+import { getToken, getUserId } from './GlobalFunctionsComponent';
 
 const PaymentsComponent = () => {
  
@@ -51,10 +51,11 @@ const PaymentsComponent = () => {
     useEffect(() => {
         const fetchAddress = async () => {
             let userId = getUserId();
+            let token = getToken()
 
-            if (userId) {
+            if (userId && token) {
                 try {
-                    await dispatch(loadAddressInitiate(userId)) 
+                    await dispatch(loadAddressInitiate(token,userId)) 
                 } catch (error) {
                     console.error("Error fetching addresses:", error);
                 }
@@ -207,9 +208,10 @@ const body = {
                                 localStorage.removeItem('totalItems');
                                 localStorage.removeItem('totalPrice');
                                 let userId = getUserId()
-                                if(userId){
+                                let token = getToken()
+                                if(userId && token){
                                     console.log("userId",userId)
-                                    await dispatch(loadCheckoutInitiate(userId))
+                                    await dispatch(loadCheckoutInitiate(token,userId))
                                     sendPushNotification()
                                 }
                                 

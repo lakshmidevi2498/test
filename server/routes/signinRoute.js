@@ -2,9 +2,10 @@ import express from 'express';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import userSchemaModal from '../models/userSchemaModal.js';
-import '../passport.js'
+import '../passport.js';
 
-const router = express.Router(); 
+const router = express.Router();
+const CLIENT_URI = "http://localhost:3000/";
 
 router.get('/google', passport.authenticate('google', {
     scope: ['profile', 'email'],
@@ -41,7 +42,8 @@ console.log(",user",user)
 
             console.log("query", query);
 
-            res.redirect(`https://test-1-ekpw.onrender.com/?${query}`);
+            res.redirect(`http://localhost:3000/?${query}`);
+            // res.status(200).json({message:"Google login successfull" ,query:query})
         } catch (error) {
             console.error('Error during Google callback:', error);
             res.status(500).send({ message: 'Server Error' });

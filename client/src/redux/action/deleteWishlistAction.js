@@ -20,11 +20,11 @@ export const deleteWishlistError = (error) => (
     payload:error
 })
 
-export const deleteWishlistInitiate = (userId,productId,navigate) => {
+export const deleteWishlistInitiate = (token,userId,productId,navigate) => {
     return async (dispatch)=>{
         dispatch(deleteWishlistStart())
         try {
-          const deleteWishlistdata = await deleteWishlistApi(userId,productId)
+          const deleteWishlistdata = await deleteWishlistApi(token,userId,productId)
           dispatch(deleteWishlistSuccess(deleteWishlistdata))
         //   navigate('/')
   

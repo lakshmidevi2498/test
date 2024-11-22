@@ -85,7 +85,7 @@ export const deleteWishlist = async (req, res) => {
       console.log("updatedWishlist",updatedWishlist)
 
     res.status(200).json({
-      message: 'Product deleted from wishlist successfully',
+      // message: 'Product deleted from wishlist successfully',
       wishlist: updatedWishlist,
     });
   } catch (error) {

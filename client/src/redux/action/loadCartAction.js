@@ -20,11 +20,11 @@ export const loadCartError = (error) => (
     payload:error
 })
 
-export const loadCartInitiate = (userId) => {
+export const loadCartInitiate = (token,userId) => {
     return async (dispatch)=>{
         dispatch(loadCartStart())
         try {
-          const loadCartdata = await loadCartApi(userId)
+          const loadCartdata = await loadCartApi(token,userId)
           dispatch(loadCartSuccess(loadCartdata))
         //   navigate('/')
   

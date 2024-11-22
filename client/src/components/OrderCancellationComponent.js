@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import {useSelector,useDispatch} from 'react-redux'
 import { loadOrderHistoryInitiate } from '../redux/action/loadOrderHistoryAction';
 import { OrderHistoryPatchInitiate } from '../redux/action/orderHistoryPatchAction';
+import { getToken, getUserId } from './GlobalFunctionsComponent';
 
 const OrderCancellationComponent = ({param ,setCancel }) => {
     const [data, setData] = useState([]);
@@ -39,17 +40,7 @@ const OrderCancellationComponent = ({param ,setCancel }) => {
     }, [data]);
  
     
-    
-    const getUserId = () => {
-        const socialUserId = localStorage.getItem("socialUserId");
-        const signupUserId = localStorage.getItem("signupUserId");
-        const signinUserId = localStorage.getItem("signinUserId");
-    
-        if (socialUserId && socialUserId !== "null") return socialUserId;
-        if (signupUserId) return signupUserId;
-        if (signinUserId) return signinUserId;
-        return null;
-      };      
+          
 
     const links = [
         { name: 'wrong item was selected.' },
@@ -67,15 +58,17 @@ const OrderCancellationComponent = ({param ,setCancel }) => {
 
     const handleCancellation = async () => {
         const body = { orderedStatus: "cancelled", selectedReason ,shippingStatus:"cancelled"};
+        console.log("body",body)
         setCancel(false);
+     let token = getToken()
+        console.log("token",token)
+        await dispatch(OrderHistoryPatchInitiate(token,id, body));
     
-        // Make sure the patch action returns a promise
-        await dispatch(OrderHistoryPatchInitiate(id, body));
-    
-        let userId = getUserId();
-    console.log("userId",userId)
-        // Make sure loadOrderHistoryInitiate is dispatched after patch action completes
-        await dispatch(loadOrderHistoryInitiate(userId));
+        let userId = getUserId(); 
+    console.log("userId",userId ,token)
+         if(userId && token){
+        await dispatch(loadOrderHistoryInitiate(token,userId));
+         }
     };
     
 

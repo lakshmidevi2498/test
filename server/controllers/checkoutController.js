@@ -25,7 +25,7 @@ export const checkoutPostController = async (req, res) => {
       
         const updatedcheckoutdata = await checkoutdata.save();
         console.log("updatedcheckoutdata",updatedcheckoutdata)
-        res.status(200).json({ message: 'Product added to existing checkout data', checkoutdata: updatedcheckoutdata });
+        res.status(200).json({ message: 'Product is added to  your bag!', checkoutdata: updatedcheckoutdata });
       } else {
         res.status(200).json({ message: 'Product already in the checkout data', checkoutdata });
       }
@@ -39,7 +39,7 @@ export const checkoutPostController = async (req, res) => {
       });
 
       const savedCheckoutData = await newCheckoutData.save();
-      res.status(201).json({ message: 'product is added to in your bag!', checkoutdata: savedCheckoutData });
+      res.status(201).json({ message: 'product is added to  your bag!', checkoutdata: savedCheckoutData });
     }
   } catch (error) {
     console.log("error", error);
