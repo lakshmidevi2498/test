@@ -50,15 +50,12 @@ const HomeComponent = () => {
           />
           <Controls.Grid
             item
-            xs={7} sm={8}lg={7}
             sx={{
-              position: 'relative',
-              // top: { xs: '28%', sm: '47%', md: '65%' },
-              // right: { xs: '-15%', sm: '-23%', md: '-25%', lg: '-18%', xl: '-5%' },
-              top:{xs:"-30%",lg:"-40%"},
-              right:{xs:"-65%",sm:" -60%",md:"-65%",xl:"-70%"},
+              position: 'absolute',
+              top: { xs: '22%', sm: '45%', md: '65%' },
+              right: { xs: '-10%', sm: '-27%', md: '-29%', lg: '-18%', xl: '-5%' },
               transform: 'translate(-50%, -50%)',
-              zIndex: 2, 
+              zIndex: 2,
             }}
           >
             <Controls.Grid item>

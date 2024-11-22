@@ -6,7 +6,8 @@ const SubscriptionSchema = new mongoose.Schema({
   keys: {
     p256dh: { type: String, required: true },
     auth: { type: String, required: true }
-  }
+  },
+  token:{ type: String, required: true}
 });
 
-export default mongoose.model('Subscription', SubscriptionSchema);
+export default mongoose.model('Notification', SubscriptionSchema);
