@@ -22,13 +22,15 @@ import razorpayRoute from './routes/razorpayRoute.js';
 import orderHistoryRoute from './routes/orderHistoryRoute.js';
 import webpush from 'web-push';
 import notificationRoute from './routes/notificationRoute.js'
-import {ComponentLoader} from 'adminjs'
+import  path from 'path';
+import { fileURLToPath } from 'url';
+// import {ComponentLoader} from 'adminjs'
 
-const componentLoader = new ComponentLoader()
+// const componentLoader = new ComponentLoader()
 
-const Components = {
-  CustomDashboard: componentLoader.add('LogoutButton', './components/LogoutButton'),
-}
+// const Components = {
+//   CustomDashboard: componentLoader.add('LogoutButton', './components/LogoutButton'),
+// }
 
 dotenv.config();
 const app = express();
@@ -85,16 +87,16 @@ AdminJS.registerAdapter({
 const adminJs = new AdminJS({
   databases: [mongoose],
   rootPath: '/adminpanel',
-  options:{
-    properties:{
-      type:'button',
-      components:{
-        component:Components.Components,
-      }
-    },
-  },
+  // options:{
+  //   properties:{
+  //     type:'button',
+  //     components:{
+  //       component:Components.Components,
+  //     }
+  //   },
+  // },
  
-  componentLoader
+  // componentLoader
 });
 
 
@@ -127,6 +129,16 @@ app.get('/logout', (req, res) => {
     res.clearCookie('connect.sid');
     res.status(200).send({ message: 'Logged out successfully' });
   });
+});
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
  
