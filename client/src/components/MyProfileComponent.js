@@ -59,7 +59,7 @@ const MyProfileComponent = () => {
         localStorage.removeItem('signinUserId')
         
         
-        // localStorage.clear();
+        localStorage.clear();
         console.log("After Logout LocalStorage:", localStorage);
         
          
