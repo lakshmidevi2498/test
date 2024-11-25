@@ -57,6 +57,8 @@ const MyProfileComponent = () => {
         localStorage.removeItem("Token");
         localStorage.removeItem("googleToken");
         localStorage.removeItem('signinUserId')
+        localStorage.removeItem('signinUserName')
+        localStorage.removeItem('username')
         
         
         localStorage.clear();

@@ -4,6 +4,7 @@ import webPush from 'web-push';
 export const notificationPostController = async (req, res) => {
   try {
       const { subscription, token } = req.body;
+      console.log("token in notificationPostController",token)
 
       // Check if subscription object has all required fields
       if (!subscription.endpoint || !subscription.keys || !subscription.keys.p256dh || !subscription.keys.auth) {

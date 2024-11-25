@@ -9,13 +9,17 @@ import theme from '../utilities/theme';
 import { getToken, getUserId } from './GlobalFunctionsComponent';
 
 const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
-  const [activeLink, setActiveLink] = useState('Home'); 
+  const [activeLink, setActiveLink] = useState('Home');
+  const [nameOne, setNameOne] = useState('')
+  const [nameTwo, setNameTwo] = useState('')
   const [named, setNamed] = useState('')
   const [wishlistCount, setWishlistCount] = useState(0)
   const [cartCount, setCartCount] = useState(0)
   const [checkoutCount, setCheckoutCount] = useState(0)
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const isMobile = useMediaQuery('(max-width: 600px)'); 
+  const isMobile = useMediaQuery('(max-width: 600px)');
+  const [tokenOne ,setTokenOne] = useState(null)
+  const [tokenTwo ,setTokenTwo] = useState(null)
   const [token ,setToken] = useState(null)
 
 
@@ -26,7 +30,8 @@ const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
 const name = localStorage.getItem('username') || localStorage.getItem('signinUserName') || localStorage.getItem('signupUserName');
 
   useEffect(() => { 
-    setToken(Token); 
+    setToken(Token);
+    console.log("token in navbar",token) 
   }, [Token]);  
   
 
@@ -36,8 +41,15 @@ const name = localStorage.getItem('username') || localStorage.getItem('signinUse
   useEffect(() => {
     if (name) {
       setNamed(name);
+      console.log("name",name)
     } 
-  }, [name]);   
+  }, [name]); 
+  
+  // useEffect(() => {
+  //   // Log token and named state when they change
+  //   console.log("Updated token:", token);
+  //   console.log("Updated named:", named);
+  // }, [token, named]); 
 
   const loadWishlist = useSelector((state) => state.loadwishlist.data || {});
   const loadCartData = useSelector((state) => state.loadcartproducts.data || {});

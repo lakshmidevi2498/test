@@ -17,7 +17,9 @@ function App() {
     <>
      <Provider store={store}>
       <BrowserRouter>
-        <ToastContainer />
+      <ToastContainer
+/>
+
         <AppRoutes />
       </BrowserRouter>
     </Provider>

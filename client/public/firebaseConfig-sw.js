@@ -16,14 +16,14 @@ const urlBase64ToUint8Array = (base64String) => {
   return outputArray;
 }
 
-const saveSubscription = async (subscription) => {
-  const response = await fetch('http://localhost:5000/save-subscription', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(subscription)
-  });
-  return response.json();
-}
+// const saveSubscription = async (subscription) => {
+//   const response = await fetch('http://localhost:5000/save-subscription', {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify(subscription)
+//   });
+//   return response.json();
+// }
 
  
 self.addEventListener('install', function(event) {
@@ -50,16 +50,16 @@ self.addEventListener('push', (event) => {
   });
 });
 
-self.addEventListener('activate', async (e) => {
-  try {
-    const subscription = await self.registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array('BCoZetIZDVC9nbAkQmdXdLwXwXyEIYeuq1xpJ4Cnqc-TJdf3w9bkbD0JGu4v1kx7uuqBMHnKQPlkIaWPu5Er2uI')
-    });
-console.log("subscription in sw.js",subscription)
-    const response = await saveSubscription(subscription);
-    console.log("Subscription saved in sw.js:", response);
-  } catch (error) {
-    console.error('Error in subscribing or saving subscription:', error);
-  }
-});
+// self.addEventListener('activate', async (e) => {
+//   try {
+//     const subscription = await self.registration.pushManager.subscribe({
+//       userVisibleOnly: true,
+//       applicationServerKey: urlBase64ToUint8Array('BCoZetIZDVC9nbAkQmdXdLwXwXyEIYeuq1xpJ4Cnqc-TJdf3w9bkbD0JGu4v1kx7uuqBMHnKQPlkIaWPu5Er2uI')
+//     });
+// console.log("subscription in sw.js",subscription)
+//     const response = await saveSubscription(subscription);
+//     console.log("Subscription saved in sw.js:", response);
+//   } catch (error) {
+//     console.error('Error in subscribing or saving subscription:', error);
+//   }
+// });

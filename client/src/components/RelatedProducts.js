@@ -39,10 +39,10 @@ const RelatedProducts = () => {
             <Controls.Grid item mb={3} mt={8}>
                 <Controls.Typography variant='caption1'sx={{ color: theme.palette.one.title, fontWeight: 'bold', fontSize: '30px' }}>Related Products</Controls.Typography>
             </Controls.Grid>
-            <Controls.Grid item mb={2}>
+            {/* <Controls.Grid item mb={2}> */}
 <ReusableSwiper product={related}  topValue={ {xs:"150%",sm:'130%',md:"145%",lg:"125%",xl:"90%"}}  
             leftValue={"9%"}/>
-            </Controls.Grid>    
+            {/* </Controls.Grid>     */}
         </Controls.Grid>
     </Controls.Grid>
     

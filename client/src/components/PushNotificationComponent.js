@@ -18,6 +18,7 @@ const urlBase64ToUint8Array = (base64String) => {
 const PushNotificationComponent = () => {
 
     const [name ,setName] = useState(null)
+    const [token ,setToken] =useState(null)
     const hasExecuted = useRef(false); 
 
     const dispatch = useDispatch()
@@ -26,8 +27,12 @@ const PushNotificationComponent = () => {
     const result2 = useSelector((state)=>state.sendnotification.data || {})
     console.log("results1",result1, "result2",result2)
 
-    
-  const token = localStorage.getItem('googleToken') || localStorage.getItem('Token');
+   useEffect(()=>{
+    const token = localStorage.getItem('googleToken') || localStorage.getItem('Token');
+    console.log("token",token )
+    setToken(token)
+   },[token]) 
+ 
 
   useEffect(() => {
     if (token) {

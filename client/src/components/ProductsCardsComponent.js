@@ -11,7 +11,7 @@ const ProductsCardsComponent = ({products ,isProductInWishlist ,handleRemoveFrom
     <>
     <Controls.Grid container justifyContent="center">
     {products.map((item) => (
-                            <Controls.Grid key={item._id} item xs={12} sm={6} lg={4} md={6} sx={{ display: { xs: "block", sm: "flex" }, justifyContent: "center" }} gap={{xs:2,sm:4,md:2}}>
+                            <Controls.Grid key={item._id} item xs={12} sm={6} lg={4} md={6} xl={3} sx={{ display: { xs: "block", sm: "flex" }, justifyContent: "center" }} gap={{xs:2,sm:4,md:2}}>
                                 <Controls.Card  sx={{
                                         borderTopLeftRadius: "30px",
                                         borderBottomRightRadius: "30px",
