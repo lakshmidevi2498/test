@@ -20,11 +20,11 @@ export const saveSubscriptionError = (error) => (
     payload:error
 })
 
-export const saveSubscriptionInitiate = (subscription ) => {
+export const saveSubscriptionInitiate = (subscription,token ) => {
     return async (dispatch)=>{
         dispatch(saveSubscriptionStart())
         try {
-          const saveSubscriptiondata = await saveSubscriptionApi(subscription)
+          const saveSubscriptiondata = await saveSubscriptionApi(subscription,token)
           dispatch(saveSubscriptionSuccess(saveSubscriptiondata))
           // toast.success("product is added to checkout page")
         //   navigate('/')
