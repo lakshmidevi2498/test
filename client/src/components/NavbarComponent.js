@@ -45,7 +45,7 @@ const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
 
 
  
-  const Token = tokenn || localStorage.getItem('Token');
+  const Token = localStorage.getItem('googleToken') || localStorage.getItem('Token');
 const name = localStorage.getItem('username') || localStorage.getItem('signinUserName') || localStorage.getItem('signupUserName');
 console.log("localStorage.getItem('googleToken')",localStorage.getItem('googleToken'))
   useEffect(() => { 
@@ -64,11 +64,7 @@ console.log("localStorage.getItem('googleToken')",localStorage.getItem('googleTo
     } 
   }, [name]); 
   
-  // useEffect(() => {
-  //   // Log token and named state when they change
-  //   console.log("Updated token:", token);
-  //   console.log("Updated named:", named);
-  // }, [token, named]); 
+ 
 
   const loadWishlist = useSelector((state) => state.loadwishlist.data || {});
   const loadCartData = useSelector((state) => state.loadcartproducts.data || {});
