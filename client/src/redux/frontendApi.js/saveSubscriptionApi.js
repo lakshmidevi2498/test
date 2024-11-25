@@ -1,7 +1,7 @@
 import API from "../../API/API";
 const api = new API();
 const endPoints = "save-subscription";
-export const saveSubscriptionApi = async (subscription) => {
+export const saveSubscriptionApi = async (subscription ,token) => {
   return new Promise(async (resolve, reject) => {
     try {
       console.log("this is post call in API---->",endPoints);
