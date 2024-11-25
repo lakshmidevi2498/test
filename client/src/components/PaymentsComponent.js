@@ -149,14 +149,14 @@ const PaymentsComponent = () => {
 
   }, [])
 
-    const sendPushNotification = async () => { 
+    const sendPushNotification = async (token) => { 
         try {
 const body = {
     title: `Hai ${name}`,
     body: 'Your order Placed Successfully',
   }
 
-  dispatch(sendNotificationInitiate(body))
+  dispatch(sendNotificationInitiate(body,token))
 
 
         } catch (error) {
@@ -212,7 +212,7 @@ const body = {
                                 if(userId && token){
                                     console.log("userId",userId)
                                     await dispatch(loadCheckoutInitiate(token,userId))
-                                    sendPushNotification()
+                                    sendPushNotification(token)
                                 }
                                 
                                  }
