@@ -58,7 +58,7 @@ const PushNotificationComponent = () => {
         hasExecuted.current = true;
       }
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     const username = localStorage.getItem('signinUserName') || localStorage.getItem('signupUserName') || localStorage.getItem('username');
