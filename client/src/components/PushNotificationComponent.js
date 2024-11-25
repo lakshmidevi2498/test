@@ -26,109 +26,98 @@ const PushNotificationComponent = () => {
     const result2 = useSelector((state)=>state.sendnotification.data || {})
     console.log("results1",result1, "result2",result2)
 
-    useEffect(() => {
-        const requestPermission = async () => {
-          try {
-            const permission = await Notification.requestPermission();
-            if (permission === 'granted') {
-              console.log('Notification permission granted.');
-              checkSubscription();
-            } else {
-              console.log('Notification permission denied.');
-            }
-          } catch (error) {
-            console.error('Error requesting notification permission:', error);
-          }
-        };
     
-        
-        if ('serviceWorker' in navigator && !hasExecuted.current) {
-          navigator.serviceWorker
-            .register('/firebaseConfig-sw.js')
-            .then((registration) => {
-              console.log('Service Worker registered with scope:', registration.scope);
-              requestPermission();
-            })
-            .catch((error) => {
-              console.error('Service Worker registration failed:', error);
-            });
-            hasExecuted.current = true;
-        }
-        
-      }, []);
+  const token = localStorage.getItem('googleToken') || localStorage.getItem('Token');
 
-      useEffect(() => {
-     
-        
-        const username = localStorage.getItem('signinUserName') || localStorage.getItem('signupUserName') || localStorage.getItem('username') 
-    setName(username)
-    console.log("username in notification",username)
-    
-
-  }, [])
-    
-      
-      const checkSubscription = async () => {
+  useEffect(() => {
+    if (token) {
+      const requestPermission = async () => {
         try {
-          const registration = await navigator.serviceWorker.ready;
-          const existingSubscription = await registration.pushManager.getSubscription();
-          console.log("existingSubscription",existingSubscription)
-          console.log("registration",registration)
-          
-          if (!existingSubscription) {
-            console.log('No subscription found. Subscribing user...');
-            subscribeUser();
+          const permission = await Notification.requestPermission();
+          if (permission === 'granted') {
+            console.log('Notification permission granted.');
+            checkSubscription(token);
           } else {
-            
-            await saveSubscription(existingSubscription);
+            console.log('Notification permission denied.');
           }
         } catch (error) {
-          console.error('Error checking subscription:', error);
+          console.error('Error requesting notification permission:', error);
         }
       };
-    
-      
-      const subscribeUser = async () => {
-        try {
-          const registration = await navigator.serviceWorker.ready;
-          const applicationServerKey = urlBase64ToUint8Array('BCoZetIZDVC9nbAkQmdXdLwXwXyEIYeuq1xpJ4Cnqc-TJdf3w9bkbD0JGu4v1kx7uuqBMHnKQPlkIaWPu5Er2uI'); // Replace with your VAPID key
-    
-          const subscription = await registration.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey,
-          });
-    
-          console.log('User subscribed:', subscription);
-          await saveSubscription(subscription);
-        } catch (error) {
-          console.error('Error subscribing user:', error);
-        }
-      };
-    
-       
-      const saveSubscription = async (subscription) => {
-        try {
-        //   const response = await fetch('http://localhost:5050/save-subscription', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(subscription),
-            
-        //   });
-    
-        //   if (!response.ok) {
-        //     throw new Error('Failed to save subscription');
-        //   }
-    
-        //   const result = await response.json();
-        //   console.log('Subscription saved:', result);
 
-          dispatch(saveSubscriptionInitiate(subscription))
-        } catch (error) {
-          console.error('Error saving subscription:', error);
-        }
-        
-      };
-    
+      if ('serviceWorker' in navigator && !hasExecuted.current) {
+        navigator.serviceWorker
+          .register('/firebaseConfig-sw.js')
+          .then((registration) => {
+            console.log('Service Worker registered with scope:', registration.scope);
+            requestPermission();
+          })
+          .catch((error) => {
+            console.error('Service Worker registration failed:', error);
+          });
+        hasExecuted.current = true;
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const username = localStorage.getItem('signinUserName') || localStorage.getItem('signupUserName') || localStorage.getItem('username');
+    setName(username);
+    console.log('username in notification', username);
+  }, [token]);
+
+  const checkSubscription = async (token) => {
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      const existingSubscription = await registration.pushManager.getSubscription();
+      console.log('existingSubscription', existingSubscription);
+
+      if (!existingSubscription) {
+        console.log('No subscription found. Subscribing user...');
+        subscribeUser(token);
+      } else {
+        await saveSubscription(existingSubscription, token);
+      }
+    } catch (error) {
+      console.error('Error checking subscription:', error);
+    }
+  };
+
+  const subscribeUser = async (token) => {
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      const applicationServerKey = urlBase64ToUint8Array('BCoZetIZDVC9nbAkQmdXdLwXwXyEIYeuq1xpJ4Cnqc-TJdf3w9bkbD0JGu4v1kx7uuqBMHnKQPlkIaWPu5Er2uI');
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey,
+      });
+
+      console.log('User subscribed:', subscription);
+      await saveSubscription(subscription, token);
+    } catch (error) {
+      console.error('Error subscribing user:', error);
+    }
+  };
+
+  const saveSubscription = async (subscription, token) => {
+    try {
+      dispatch(saveSubscriptionInitiate(subscription, token));
+      console.log("token in saveSubscription",token)
+    } catch (error) {
+      console.error('Error saving subscription:', error);
+    }
+  };
+
+  // const updateSubscription = async (existingSubscription, token) => {
+  //   try {
+  //     // dispatch(saveSubscriptionInitiate(subscription, token));
+  //     const res = axios.put('http://localhost:5050/update/subscription',{existingSubscription, token})
+  //     console.log("token in saveSubscription",token)
+  //   } catch (error) {
+  //     console.error('Error saving subscription:', error);
+  //   }
+
+  // }
       
    
   return (
