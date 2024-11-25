@@ -82,6 +82,7 @@ const PushNotificationComponent = () => {
         subscribeUser(token);
       } else {
         await saveSubscription(existingSubscription, token);
+       
       }
     } catch (error) {
       console.error('Error checking subscription:', error);
@@ -107,6 +108,11 @@ const PushNotificationComponent = () => {
   const saveSubscription = async (subscription, token) => {
     try {
       dispatch(saveSubscriptionInitiate(subscription, token));
+
+      const endpoint = subscription.endpoint
+      localStorage.setItem("endpoint",endpoint)
+      console.log("endpoint",endpoint)
+      
       console.log("token in saveSubscription",token)
     } catch (error) {
       console.error('Error saving subscription:', error);

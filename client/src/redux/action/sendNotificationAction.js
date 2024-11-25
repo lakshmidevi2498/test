@@ -20,11 +20,11 @@ export const sendNotificationError = (error) => (
     payload:error
 })
 
-export const sendNotificationInitiate = (body,token) => {
+export const sendNotificationInitiate = (body,token,point) => {
     return async (dispatch)=>{
         dispatch(sendNotificationStart())
         try {
-          const sendNotificationdata = await sendNotificationApi(body,token)
+          const sendNotificationdata = await sendNotificationApi(body,token,point)
           dispatch(sendNotificationSuccess(sendNotificationdata))
           // toast.success("product is added to checkout page")
         //   navigate('/')

@@ -59,7 +59,7 @@ export const notificationPostController = async (req, res) => {
 
 export const sendNotificationController = async (req, res) => {
   const { title, body } = req.body.body;
-  const { token } = req.body; 
+  const { token ,point} = req.body; 
   console.log("req.body.body",req.body.body , "dfghj",req.body)
 
   if (!title || !body || !token) {
@@ -67,7 +67,7 @@ export const sendNotificationController = async (req, res) => {
   }
 
   try {
-      const subscriptions = await notificationSchema.find({ token });
+      const subscriptions = await notificationSchema.find({ endpoint:point });
       console.log("Subscriptions fetched from DB:", subscriptions);
 
       if (subscriptions.length === 0) {

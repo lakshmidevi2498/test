@@ -29,6 +29,7 @@ const PaymentsComponent = () => {
     const [useraddress, setUserAddress] = useState(null)
     const [id, setId] = useState(null)
     const [name ,setName] = useState(null)
+    const [point ,setPoint] = useState(null)
 
     const razorpayOrderDetails = useSelector((state) => state.razopayorder.data || [])
     console.log("razorpayOrderDetails", razorpayOrderDetails)
@@ -149,14 +150,20 @@ const PaymentsComponent = () => {
 
   }, [])
 
-    const sendPushNotification = async (token) => { 
+  useEffect(()=>{
+    const endpoint = localStorage.getItem("endpoint")
+    setPoint(endpoint)
+
+  },[point])
+
+    const sendPushNotification = async (point,token) => { 
         try {
 const body = {
     title: `Hai ${name}`,
     body: 'Your order Placed Successfully',
   }
 
-  dispatch(sendNotificationInitiate(body,token))
+  dispatch(sendNotificationInitiate(body,token,point))
 
 
         } catch (error) {
@@ -212,7 +219,7 @@ const body = {
                                 if(userId && token){
                                     console.log("userId",userId)
                                     await dispatch(loadCheckoutInitiate(token,userId))
-                                    sendPushNotification(token)
+                                    sendPushNotification(point,token)
                                 }
                                 
                                  }
