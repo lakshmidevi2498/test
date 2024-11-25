@@ -36,13 +36,15 @@ console.log("loginUSerData",loginUserData)
   }
 
   useEffect(() => {
+    // if(localStorage.getItem('Token') !== null){
+     
     const res = loginUserData.data || [];
     console.log("res", res);
 
    
     if (res.token) {
         setToken(res.token);
-        localStorage.setItem("Token", res.token);
+        // localStorage.setItem("Token", res.token);
     }
     
     console.log("handleSignin response", res);
@@ -53,14 +55,15 @@ console.log("loginUSerData",loginUserData)
         const user = res.userExist._id;
         const name = res.userExist.name;
 
-        localStorage.setItem("signinUserId", user);
-        localStorage.setItem("signinUserName", name);
+        // localStorage.setItem("signinUserId", user);
+        // localStorage.setItem("signinUserName", name);
 
         console.log("res.userExist._id", user);
         console.log("res.userExist.name", name);
     } else {
         console.log("User data is not yet available");
     }
+  // }
 }, [loginUserData]);
 
 

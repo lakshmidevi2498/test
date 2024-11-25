@@ -5,26 +5,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const HomeComponent = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-
-  
-  const token = searchParams.get('token');
-  const id = searchParams.get('id');
-  const username = searchParams.get('name');
-
-  useEffect(() => {
-    if (token) {
-      localStorage.setItem('googleToken', token);
-      console.log('Google token:', localStorage.getItem('googleToken'));
-    }
-    if (id) {
-      localStorage.setItem('socialUserId', id);
-      console.log('currentUserId:', localStorage.getItem('socialUserId'));
-    }
-    if (username) {
-      localStorage.setItem('username', username);
-    }
-  }, [token, id, username]);
+ 
 
   const handleNavigate = () => {
     navigate('/categories/vegetable');

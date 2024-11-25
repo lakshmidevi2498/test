@@ -30,7 +30,11 @@ export const emailLoginInitiate = (user,navigate) => {
           
           dispatch(emailLoginSuccess(emaillogindata))
           if(emaillogindata?.data.userExist?.role === "user"){
-            console.log("emaillogindata?.data.userExist?.role",emaillogindata.data.userExist.role)
+            localStorage.setItem('Token',emaillogindata?.data?.token) 
+    
+            localStorage.setItem("signinUserId", emaillogindata?.data?.userExist?._id);
+            localStorage.setItem("signinUserName", emaillogindata?.data?.userExist?.name);
+            console.log("emaillogindata?.data.userExist?.role",emaillogindata?.data?.userExist?.role)
             navigate('/')
           }
          

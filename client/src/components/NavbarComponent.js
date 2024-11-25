@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { deepOrange, deepPurple, teal } from '@mui/material/colors';
 import theme from '../utilities/theme';
 import { getToken, getUserId } from './GlobalFunctionsComponent';
+import { useSearchParams } from 'react-router-dom';
 
 const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
   const [activeLink, setActiveLink] = useState('Home');
@@ -17,18 +18,36 @@ const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
   const [cartCount, setCartCount] = useState(0)
   const [checkoutCount, setCheckoutCount] = useState(0)
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const isMobile = useMediaQuery('(max-width: 600px)');
-  const [tokenOne ,setTokenOne] = useState(null)
-  const [tokenTwo ,setTokenTwo] = useState(null)
+  const isMobile = useMediaQuery('(max-width: 600px)'); 
   const [token ,setToken] = useState(null)
+  const [searchParams] = useSearchParams();
+
+  
+  const tokenn = searchParams.get('token');
+  const id = searchParams.get('id');
+  const username = searchParams.get('name');
+
+  useEffect(() => {
+    if (tokenn) {
+      localStorage.setItem('googleToken', tokenn);
+      console.log('Google token:', localStorage.getItem('googleToken'));
+    }
+    if (id) {
+      localStorage.setItem('socialUserId', id);
+      console.log('currentUserId:', localStorage.getItem('socialUserId'));
+    }
+    if (username) {
+      localStorage.setItem('username', username);
+    }
+  }, [token, id, username]);
 
 
 
 
  
-  const Token = localStorage.getItem("googleToken") || localStorage.getItem("Token");
+  const Token = tokenn || localStorage.getItem('Token');
 const name = localStorage.getItem('username') || localStorage.getItem('signinUserName') || localStorage.getItem('signupUserName');
-
+console.log("localStorage.getItem('googleToken')",localStorage.getItem('googleToken'))
   useEffect(() => { 
     setToken(Token);
     console.log("token in navbar",token) 

@@ -59,10 +59,18 @@ const MyProfileComponent = () => {
         localStorage.removeItem('signinUserId')
         localStorage.removeItem('signinUserName')
         localStorage.removeItem('username')
+        localStorage.removeItem('socialUserId')
         
         
         localStorage.clear();
-        console.log("After Logout LocalStorage:", localStorage);
+        console.log("After Logout LocalStorage:", localStorage.getItem('Token'));
+        console.log("After Logout LocalStorage:", localStorage.getItem('googleToken'));
+        console.log("After Logout LocalStorage:", localStorage.getItem('signinUserId'))
+
+        console.log("After Logout LocalStorage:", localStorage.getItem('signinUserName'))
+
+        console.log("After Logout LocalStorage:", localStorage.getItem('username'))
+
         
          
         navigate('/');
