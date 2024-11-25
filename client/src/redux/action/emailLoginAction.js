@@ -26,8 +26,14 @@ export const emailLoginInitiate = (user,navigate) => {
         dispatch(emailLoginStart())
         try {
           const emaillogindata = await emailLoginApi(user)
+          console.log("emaillogindata",emaillogindata)
+          
           dispatch(emailLoginSuccess(emaillogindata))
-          navigate('/')
+          if(emaillogindata?.data.userExist?.role === "user"){
+            console.log("emaillogindata?.data.userExist?.role",emaillogindata.data.userExist.role)
+            navigate('/')
+          }
+         
   
         } catch (err) {
           console.log("error",err)
