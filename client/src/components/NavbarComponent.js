@@ -23,48 +23,52 @@ const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
   const [searchParams] = useSearchParams();
 
   
-  const tokenn = searchParams.get('token');
-  const id = searchParams.get('id');
-  const username = searchParams.get('name');
-
   useEffect(() => {
-    if (tokenn) {
-      localStorage.setItem('googleToken', tokenn);
-      console.log('Google token:', localStorage.getItem('googleToken'));
+    const token = searchParams.get('token');
+    const id = searchParams.get('id');
+    const username = searchParams.get('name');
+
+    if (token) {
+      const existingToken = localStorage.getItem('googleToken');
+      if (!existingToken) {
+        localStorage.setItem('googleToken', token);
+      }
+      setToken(token);
     }
+
     if (id) {
-      localStorage.setItem('socialUserId', id);
-      console.log('currentUserId:', localStorage.getItem('socialUserId'));
+      const existingSocialUserId = localStorage.getItem('socialUserId');
+      if (!existingSocialUserId) {
+        localStorage.setItem('socialUserId', id);
+      }
     }
+
     if (username) {
-      localStorage.setItem('username', username);
+      const existingName = localStorage.getItem('username');
+      if (!existingName) {
+        localStorage.setItem('username', username);
+      }
+      setNamed(username);
     }
-  }, [token, id, username]);
+  }, []);
 
-
-
-
- 
-  const Token = localStorage.getItem('googleToken') || localStorage.getItem('Token');
-const name = localStorage.getItem('username') || localStorage.getItem('signinUserName') || localStorage.getItem('signupUserName');
-console.log("localStorage.getItem('googleToken')",localStorage.getItem('googleToken'))
-  useEffect(() => { 
-    setToken(Token);
-    console.log("token in navbar",token) 
-  }, [Token]);  
-  
-
-  
- 
-  
   useEffect(() => {
-    if (name) {
-      setNamed(name);
-      console.log("name",name)
-    } 
-  }, [name]); 
+    const storedToken = localStorage.getItem('googleToken');
+    if (storedToken) {
+      setToken(storedToken);
+    }
+
+    const storedName = localStorage.getItem('username');
+    if (storedName) {
+      setNamed(storedName);
+    }
+  }, []);
   
- 
+  // useEffect(() => {
+  //   // Log token and named state when they change
+  //   console.log("Updated token:", token);
+  //   console.log("Updated named:", named);
+  // }, [token, named]); 
 
   const loadWishlist = useSelector((state) => state.loadwishlist.data || {});
   const loadCartData = useSelector((state) => state.loadcartproducts.data || {});
