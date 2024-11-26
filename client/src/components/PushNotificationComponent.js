@@ -19,7 +19,15 @@ const PushNotificationComponent = () => {
 
     const [name ,setName] = useState(null)
     const [token ,setToken] =useState(null)
+    const [point ,setPoint] = useState(null)
     const hasExecuted = useRef(false); 
+    const endpoint = localStorage.getItem("endpoint")
+    useEffect(()=>{
+      if(endpoint !== null){
+        setPoint(endpoint)
+      }
+      console.log("endpoint",endpoint)
+    },[endpoint])
 
     const dispatch = useDispatch()
 
@@ -29,9 +37,9 @@ const PushNotificationComponent = () => {
 
    useEffect(()=>{
     const token = localStorage.getItem('googleToken') || localStorage.getItem('Token');
-    console.log("token",token )
-    setToken(token)
-   },[token]) 
+    console.log("token in notification",token )
+    setToken(token) 
+   },[token,name]) 
  
 
   useEffect(() => {
@@ -106,6 +114,8 @@ const PushNotificationComponent = () => {
   };
 
   const saveSubscription = async (subscription, token) => {
+    if(point === null){
+
     try {
       dispatch(saveSubscriptionInitiate(subscription, token));
 
@@ -117,28 +127,16 @@ const PushNotificationComponent = () => {
     } catch (error) {
       console.error('Error saving subscription:', error);
     }
+  }
   };
 
-  // const updateSubscription = async (existingSubscription, token) => {
-  //   try {
-  //     // dispatch(saveSubscriptionInitiate(subscription, token));
-  //     const res = axios.put('http://localhost:5050/update/subscription',{existingSubscription, token})
-  //     console.log("token in saveSubscription",token)
-  //   } catch (error) {
-  //     console.error('Error saving subscription:', error);
-  //   }
-
-  // }
+ 
       
    
   return (
     <>
     <Controls.Grid container justifyContent="center">
-        {/* <Controls.Grid item sx={{}} mt={5}>
-    <Controls.Button variant ="secondary" 
-    // onClick = {sendPushNotification}
-    >Notify</Controls.Button>
-    </Controls.Grid> */}
+        
     </Controls.Grid>
     </>
   )
