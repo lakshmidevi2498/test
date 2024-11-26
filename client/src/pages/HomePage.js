@@ -6,14 +6,14 @@ import BestSellerComponent from '../components/BestSellerComponent'
 import WhyChooseComponent from '../components/WhyChooseComponent'
 import FooterComponent from '../components/FooterComponent'
 import DealsComponent from '../components/DealsComponent'
-import PushNotificationComponent from '../components/PushNotificationComponent'
+import PushNotificationComponent from '../components/PushNotificationComponent' 
 
 const HomePage = () => {
   return (
     <>
      <PushNotificationComponent/>
     <NavbarComponent value1={"block"} value5={"block"} value2={"block"} value3={"block"} value4={"block"} image={"./assests/images/vegetable.png"} />
-   <HomeComponent/>
+   <HomeComponent/> 
    <TodayDealsComponent/>
    <DealsComponent/>
    <BestSellerComponent/>

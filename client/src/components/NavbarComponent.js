@@ -53,12 +53,12 @@ const NavbarComponent = ({value1,value2 ,value3 ,value4 ,value5,image}) => {
   }, []);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('googleToken');
+    const storedToken = localStorage.getItem('googleToken') || localStorage.getItem('Token');
     if (storedToken) {
       setToken(storedToken);
     }
 
-    const storedName = localStorage.getItem('username');
+    const storedName = localStorage.getItem('username') || localStorage.getItem('signinUserName') || localStorage.getItem('signupUserName');
     if (storedName) {
       setNamed(storedName);
     }

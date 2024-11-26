@@ -34,7 +34,7 @@ const TodayDealsComponent = () => {
         <>
             <Controls.Grid container justifyContent='center'>
                 <Controls.Grid item xs={10} >
-                    <Controls.Grid item sx={{}} my={4}>
+                    <Controls.Grid item sx={{}} mb={4} mt={0}>
                         <Controls.Typography variant='caption1' sx={{ color: theme.palette.one.bg, fontWeight: "bold", fontSize: "30px" }}>Organic & Natural </Controls.Typography>
                     </Controls.Grid>
                     <CardsComponent products ={products}/>
